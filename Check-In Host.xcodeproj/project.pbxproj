@@ -9,11 +9,14 @@
 /* Begin PBXBuildFile section */
 		05494D181ACDABBF00126EF9 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 05494D171ACDABBF00126EF9 /* main.m */; };
 		05494D1B1ACDABBF00126EF9 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 05494D1A1ACDABBF00126EF9 /* AppDelegate.m */; };
-		05494D1E1ACDABBF00126EF9 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 05494D1D1ACDABBF00126EF9 /* ViewController.m */; };
+		05494D1E1ACDABBF00126EF9 /* AuthViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 05494D1D1ACDABBF00126EF9 /* AuthViewController.m */; };
 		05494D211ACDABBF00126EF9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 05494D1F1ACDABBF00126EF9 /* Main.storyboard */; };
 		05494D231ACDABBF00126EF9 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 05494D221ACDABBF00126EF9 /* Images.xcassets */; };
 		05494D261ACDABBF00126EF9 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 05494D241ACDABBF00126EF9 /* LaunchScreen.xib */; };
 		05494D321ACDABBF00126EF9 /* Check_In_HostTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 05494D311ACDABBF00126EF9 /* Check_In_HostTests.m */; };
+		054E74B11AD0EA5D0094898B /* Auth.m in Sources */ = {isa = PBXBuildFile; fileRef = 054E74B01AD0EA5D0094898B /* Auth.m */; };
+		057DEF421AD8CC9F00131325 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 057DEF411AD8CC9F00131325 /* CoreLocation.framework */; };
+		873AE02E41B526725E340A17 /* libPods-Check-In Host.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2AD93E8799937F1B08C5EF2D /* libPods-Check-In Host.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -32,14 +35,20 @@
 		05494D171ACDABBF00126EF9 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		05494D191ACDABBF00126EF9 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		05494D1A1ACDABBF00126EF9 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		05494D1C1ACDABBF00126EF9 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		05494D1D1ACDABBF00126EF9 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		05494D1C1ACDABBF00126EF9 /* AuthViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AuthViewController.h; sourceTree = "<group>"; };
+		05494D1D1ACDABBF00126EF9 /* AuthViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AuthViewController.m; sourceTree = "<group>"; };
 		05494D201ACDABBF00126EF9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		05494D221ACDABBF00126EF9 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		05494D251ACDABBF00126EF9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		05494D2B1ACDABBF00126EF9 /* Check-In HostTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Check-In HostTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		05494D301ACDABBF00126EF9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		05494D311ACDABBF00126EF9 /* Check_In_HostTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Check_In_HostTests.m; sourceTree = "<group>"; };
+		054E74AF1AD0EA5D0094898B /* Auth.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Auth.h; path = Model/Auth.h; sourceTree = "<group>"; };
+		054E74B01AD0EA5D0094898B /* Auth.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Auth.m; path = Model/Auth.m; sourceTree = "<group>"; };
+		057DEF411AD8CC9F00131325 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		2AD93E8799937F1B08C5EF2D /* libPods-Check-In Host.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Check-In Host.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		3DC0413A47D213081D49689B /* Pods-Check-In Host.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Check-In Host.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Check-In Host/Pods-Check-In Host.debug.xcconfig"; sourceTree = "<group>"; };
+		80E350A0D22A024E25BD6761 /* Pods-Check-In Host.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Check-In Host.release.xcconfig"; path = "Pods/Target Support Files/Pods-Check-In Host/Pods-Check-In Host.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -47,6 +56,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				057DEF421AD8CC9F00131325 /* CoreLocation.framework in Frameworks */,
+				873AE02E41B526725E340A17 /* libPods-Check-In Host.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -66,6 +77,8 @@
 				05494D141ACDABBF00126EF9 /* Check-In Host */,
 				05494D2E1ACDABBF00126EF9 /* Check-In HostTests */,
 				05494D131ACDABBF00126EF9 /* Products */,
+				42A42ABD5EE41662AA2AAB71 /* Pods */,
+				295242C03AB03A9693819BCC /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -83,11 +96,12 @@
 			children = (
 				05494D191ACDABBF00126EF9 /* AppDelegate.h */,
 				05494D1A1ACDABBF00126EF9 /* AppDelegate.m */,
-				05494D1C1ACDABBF00126EF9 /* ViewController.h */,
-				05494D1D1ACDABBF00126EF9 /* ViewController.m */,
+				05494D1C1ACDABBF00126EF9 /* AuthViewController.h */,
+				05494D1D1ACDABBF00126EF9 /* AuthViewController.m */,
 				05494D1F1ACDABBF00126EF9 /* Main.storyboard */,
 				05494D221ACDABBF00126EF9 /* Images.xcassets */,
 				05494D241ACDABBF00126EF9 /* LaunchScreen.xib */,
+				054E74B21AD0EA670094898B /* Model */,
 				05494D151ACDABBF00126EF9 /* Supporting Files */,
 			);
 			path = "Check-In Host";
@@ -119,6 +133,33 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		054E74B21AD0EA670094898B /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				054E74AF1AD0EA5D0094898B /* Auth.h */,
+				054E74B01AD0EA5D0094898B /* Auth.m */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		295242C03AB03A9693819BCC /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				057DEF411AD8CC9F00131325 /* CoreLocation.framework */,
+				2AD93E8799937F1B08C5EF2D /* libPods-Check-In Host.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		42A42ABD5EE41662AA2AAB71 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				3DC0413A47D213081D49689B /* Pods-Check-In Host.debug.xcconfig */,
+				80E350A0D22A024E25BD6761 /* Pods-Check-In Host.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -126,9 +167,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 05494D351ACDABBF00126EF9 /* Build configuration list for PBXNativeTarget "Check-In Host" */;
 			buildPhases = (
+				838CDEF749B961333D500FCB /* Check Pods Manifest.lock */,
 				05494D0E1ACDABBF00126EF9 /* Sources */,
 				05494D0F1ACDABBF00126EF9 /* Frameworks */,
 				05494D101ACDABBF00126EF9 /* Resources */,
+				E5EAFC5CA0FB6E7EBBF8CA7D /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -214,14 +257,48 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		838CDEF749B961333D500FCB /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		E5EAFC5CA0FB6E7EBBF8CA7D /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Check-In Host/Pods-Check-In Host-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		05494D0E1ACDABBF00126EF9 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				05494D1E1ACDABBF00126EF9 /* ViewController.m in Sources */,
+				05494D1E1ACDABBF00126EF9 /* AuthViewController.m in Sources */,
 				05494D1B1ACDABBF00126EF9 /* AppDelegate.m in Sources */,
 				05494D181ACDABBF00126EF9 /* main.m in Sources */,
+				054E74B11AD0EA5D0094898B /* Auth.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -341,6 +418,7 @@
 		};
 		05494D361ACDABBF00126EF9 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3DC0413A47D213081D49689B /* Pods-Check-In Host.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = "Check-In Host/Info.plist";
@@ -351,6 +429,7 @@
 		};
 		05494D371ACDABBF00126EF9 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 80E350A0D22A024E25BD6761 /* Pods-Check-In Host.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = "Check-In Host/Info.plist";
@@ -412,6 +491,7 @@
 				05494D371ACDABBF00126EF9 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		05494D381ACDABBF00126EF9 /* Build configuration list for PBXNativeTarget "Check-In HostTests" */ = {
 			isa = XCConfigurationList;
@@ -420,6 +500,7 @@
 				05494D3A1ACDABBF00126EF9 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
