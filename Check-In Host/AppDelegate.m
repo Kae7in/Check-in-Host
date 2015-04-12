@@ -20,7 +20,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
-    NSLog(@"application didFinishLaunchingWithOptions called with options: %@", launchOptions);
+//    NSLog(@"application didFinishLaunchingWithOptions called with options: %@", launchOptions);
     [Parse setApplicationId:@"blMS2b3IdmiXQ4nF5783j6bsOjQSMkrGUM4jYLRg"
                   clientKey:@"QVB7nIyAQsyLp597iiId4lYIH4HCwWQYOaYQMDAF"];
     [PFFacebookUtils initializeFacebookWithApplicationLaunchOptions:launchOptions];
@@ -31,7 +31,7 @@
             openURL:(NSURL *)url
   sourceApplication:(NSString *)sourceApplication
          annotation:(id)annotation {
-    NSLog(@"openURL called with %@", url);
+//    NSLog(@"openURL called with %@", url);
     return [[FBSDKApplicationDelegate sharedInstance] application:application
                                                           openURL:url
                                                 sourceApplication:sourceApplication

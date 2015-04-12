@@ -15,6 +15,7 @@
 		05494D261ACDABBF00126EF9 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 05494D241ACDABBF00126EF9 /* LaunchScreen.xib */; };
 		05494D321ACDABBF00126EF9 /* Check_In_HostTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 05494D311ACDABBF00126EF9 /* Check_In_HostTests.m */; };
 		054E74B11AD0EA5D0094898B /* Auth.m in Sources */ = {isa = PBXBuildFile; fileRef = 054E74B01AD0EA5D0094898B /* Auth.m */; };
+		057580731ADA3AA100EEA4FE /* RegistrationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 057580721ADA3AA100EEA4FE /* RegistrationViewController.m */; };
 		057DEF421AD8CC9F00131325 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 057DEF411AD8CC9F00131325 /* CoreLocation.framework */; };
 		873AE02E41B526725E340A17 /* libPods-Check-In Host.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2AD93E8799937F1B08C5EF2D /* libPods-Check-In Host.a */; };
 /* End PBXBuildFile section */
@@ -45,6 +46,8 @@
 		05494D311ACDABBF00126EF9 /* Check_In_HostTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Check_In_HostTests.m; sourceTree = "<group>"; };
 		054E74AF1AD0EA5D0094898B /* Auth.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Auth.h; path = Model/Auth.h; sourceTree = "<group>"; };
 		054E74B01AD0EA5D0094898B /* Auth.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Auth.m; path = Model/Auth.m; sourceTree = "<group>"; };
+		057580711ADA3AA100EEA4FE /* RegistrationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegistrationViewController.h; sourceTree = "<group>"; };
+		057580721ADA3AA100EEA4FE /* RegistrationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegistrationViewController.m; sourceTree = "<group>"; };
 		057DEF411AD8CC9F00131325 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		2AD93E8799937F1B08C5EF2D /* libPods-Check-In Host.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Check-In Host.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3DC0413A47D213081D49689B /* Pods-Check-In Host.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Check-In Host.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Check-In Host/Pods-Check-In Host.debug.xcconfig"; sourceTree = "<group>"; };
@@ -98,6 +101,8 @@
 				05494D1A1ACDABBF00126EF9 /* AppDelegate.m */,
 				05494D1C1ACDABBF00126EF9 /* AuthViewController.h */,
 				05494D1D1ACDABBF00126EF9 /* AuthViewController.m */,
+				057580711ADA3AA100EEA4FE /* RegistrationViewController.h */,
+				057580721ADA3AA100EEA4FE /* RegistrationViewController.m */,
 				05494D1F1ACDABBF00126EF9 /* Main.storyboard */,
 				05494D221ACDABBF00126EF9 /* Images.xcassets */,
 				05494D241ACDABBF00126EF9 /* LaunchScreen.xib */,
@@ -297,6 +302,7 @@
 			files = (
 				05494D1E1ACDABBF00126EF9 /* AuthViewController.m in Sources */,
 				05494D1B1ACDABBF00126EF9 /* AppDelegate.m in Sources */,
+				057580731ADA3AA100EEA4FE /* RegistrationViewController.m in Sources */,
 				05494D181ACDABBF00126EF9 /* main.m in Sources */,
 				054E74B11AD0EA5D0094898B /* Auth.m in Sources */,
 			);
