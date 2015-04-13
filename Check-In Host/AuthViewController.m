@@ -51,7 +51,6 @@
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    NSLog(@"username: %@", self.username);
     // segue here
     if ([FBSDKAccessToken currentAccessToken]) {
         NSLog(@"Already Logged In");
@@ -81,14 +80,29 @@
                         NSLog(@"Uh oh. The user cancelled the Facebook login.");
                     } else if (user.isNew) {
                         NSLog(@"User signed up and logged in through Facebook!");
+                        [self submitUserIDAsColumnEntryIntoUserClass];
                         // segue to username viewcontroller
                         [self performSegueWithIdentifier:@"segueToRegistration" sender:self];
                     } else {
                         NSLog(@"User logged in through Facebook!");
+                        [self performSegueWithIdentifier:@"segueToTabBar" sender:self];
                     }
                 }];
         [self.loginButton setTitle:@"Logout" forState:UIControlStateNormal];
     }
+}
+
+
+- (void)submitUserIDAsColumnEntryIntoUserClass {
+    PFUser *user = [PFUser currentUser];
+    [[[FBSDKGraphRequest alloc] initWithGraphPath:@"me" parameters:nil]
+     startWithCompletionHandler:^(FBSDKGraphRequestConnection *connection, id result, NSError *error) {
+         if (!error) {
+             NSLog(@"fetched user:%@", result);
+             user[@"userID"] = [result[@"id"] description];
+             [user saveInBackground];
+         }
+     }];
 }
 
 

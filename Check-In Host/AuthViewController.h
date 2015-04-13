@@ -10,6 +10,4 @@
 
 @interface AuthViewController : UIViewController
 
-@property (strong, nonatomic) NSString *username;
-
 @end

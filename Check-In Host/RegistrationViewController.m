@@ -30,11 +30,7 @@
 
 
 - (IBAction)submitButtonAction:(UIButton *)sender {
-    NSLog(@"submit");
-    AuthViewController *parent = (AuthViewController *)[self.navigationController.viewControllers objectAtIndex:0];
-    parent.username = self.usernameTextField.text;
-    [self.navigationController popToViewController:parent animated:YES];
-    [self.navigationController popToRootViewControllerAnimated:true];
+    
 }
 
 /*
