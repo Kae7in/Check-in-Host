@@ -8,6 +8,7 @@
 
 #import "UserViewController.h"
 #import "AuthViewController.h"
+#import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import <PFFacebookUtils.h>
 
 @interface UserViewController ()

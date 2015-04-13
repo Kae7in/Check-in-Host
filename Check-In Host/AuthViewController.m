@@ -6,7 +6,6 @@
 //  Copyright (c) 2015 CS378. All rights reserved.
 //
 
-//#import <MapKit/MapKit.h>
 #import "AuthViewController.h"
 #import <Parse/Parse.h>
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
@@ -52,10 +51,17 @@
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     // segue here
+    
     if ([FBSDKAccessToken currentAccessToken]) {
         NSLog(@"Already Logged In");
-        // Go ahead and segue to next appropriate view controller
-        [self performSegueWithIdentifier:@"segueToTabBar" sender:self];
+
+        PFUser *user = [PFUser currentUser];
+        if (user && user[@"CHUserID"]) {
+            // Go ahead and segue to next appropriate view controller
+            [self performSegueWithIdentifier:@"segueToTabBar" sender:self];
+        } else {
+            [self performSegueWithIdentifier:@"segueToRegistration" sender:self];
+        }
     }
 }
 
@@ -104,8 +110,7 @@
     [[[FBSDKGraphRequest alloc] initWithGraphPath:@"me" parameters:nil]
      startWithCompletionHandler:^(FBSDKGraphRequestConnection *connection, id result, NSError *error) {
          if (!error) {
-             NSLog(@"fetched user:%@", result);
-             user[@"userID"] = [result[@"id"] description];
+             user[@"fbUserID"] = [result[@"id"] description];
              [user saveInBackground];
          }
      }];

@@ -8,6 +8,8 @@
 
 #import "RegistrationViewController.h"
 #import "AuthViewController.h"
+#import <FBSDKCoreKit/FBSDKCoreKit.h>
+#import <PFFacebookUtils.h>
 
 @interface RegistrationViewController ()
 @property (weak, nonatomic) IBOutlet UITextField *usernameTextField;
@@ -30,7 +32,12 @@
 
 
 - (IBAction)submitButtonAction:(UIButton *)sender {
-    
+    PFUser *user = [PFUser currentUser];
+    NSLog(@"User entered CHUserID: %@", self.usernameTextField.text);
+#warning check if username is already in DB
+    user[@"CHUserID"] = self.usernameTextField.text;
+    [user saveInBackground];
+    [self performSegueWithIdentifier:@"segueToTabBar" sender:self];
 }
 
 /*

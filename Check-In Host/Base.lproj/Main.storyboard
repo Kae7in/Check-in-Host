@@ -7,7 +7,6 @@
         <!--Item-->
         <scene sceneID="D9C-bi-9te">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="QQu-H4-e7h" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <navigationController id="Eyq-NA-H31" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Item" id="JcQ-xN-j0D"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="YWF-RG-CIP">
@@ -18,6 +17,7 @@
                         <segue destination="lGB-Zl-C4U" kind="relationship" relationship="rootViewController" id="tmn-aG-LRq"/>
                     </connections>
                 </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="QQu-H4-e7h" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1248" y="60"/>
         </scene>
