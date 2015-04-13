@@ -54,19 +54,25 @@
     // segue here
     if ([FBSDKAccessToken currentAccessToken]) {
         NSLog(@"Already Logged In");
-        [self.loginButton setTitle:@"Logout" forState:UIControlStateNormal];
         // Go ahead and segue to next appropriate view controller
         [self performSegueWithIdentifier:@"segueToTabBar" sender:self];
-    } else {
-        [self.loginButton setTitle:@"Login" forState:UIControlStateNormal];
-        // Stay in AuthViewController to let the user login
     }
 }
 
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    if ([FBSDKAccessToken currentAccessToken]) {
+        NSLog(@"Already Logged In");
+        [self.loginButton setTitle:@"Logout" forState:UIControlStateNormal];
+    } else {
+        [self.loginButton setTitle:@"Login" forState:UIControlStateNormal];
+    }
+}
 
+
+- (IBAction)returnToLogin:(UIStoryboardSegue *) segue {
+    
 }
 
 
