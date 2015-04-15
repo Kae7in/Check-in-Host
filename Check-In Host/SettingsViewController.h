@@ -1,5 +1,5 @@
 //
-//  UserViewController.h
+//  SettingsViewController.h
 //  Check-In Host
 //
 //  Created by Kaelin D. Hooper on 4/12/15.
@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface UserViewController : UIViewController
+@interface SettingsViewController : UIViewController
 
 @end

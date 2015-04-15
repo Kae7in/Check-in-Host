@@ -19,7 +19,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="QQu-H4-e7h" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1248" y="60"/>
+            <point key="canvasLocation" x="1248" y="-640"/>
         </scene>
         <!--Auth View Controller-->
         <scene sceneID="ufC-wZ-h7g">
@@ -64,10 +64,10 @@
             </objects>
             <point key="canvasLocation" x="-1378" y="60"/>
         </scene>
-        <!--Item 2-->
+        <!--Nearby Events-->
         <scene sceneID="dUI-Qv-gV1">
             <objects>
-                <viewController id="lGB-Zl-C4U" sceneMemberID="viewController">
+                <viewController id="lGB-Zl-C4U" customClass="MapViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="X1G-v8-pdF"/>
                         <viewControllerLayoutGuide type="bottom" id="mUh-NJ-gwH"/>
@@ -75,19 +75,34 @@
                     <view key="view" contentMode="scaleToFill" id="wGf-oj-avR">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yWL-SZ-Bod" customClass="GMSMapView">
+                                <rect key="frame" x="0.0" y="64" width="600" height="487"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="width" secondItem="yWL-SZ-Bod" secondAttribute="width" id="RQd-92-DTs"/>
+                            <constraint firstItem="yWL-SZ-Bod" firstAttribute="top" secondItem="X1G-v8-pdF" secondAttribute="bottom" id="mh4-JD-MGJ"/>
+                            <constraint firstItem="mUh-NJ-gwH" firstAttribute="top" secondItem="yWL-SZ-Bod" secondAttribute="bottom" id="mzW-lz-Q9M"/>
+                            <constraint firstAttribute="centerX" secondItem="yWL-SZ-Bod" secondAttribute="centerX" id="xm5-HR-6Oh"/>
+                        </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Item 2" id="1TA-gd-ght"/>
-                    <navigationItem key="navigationItem" id="Rp0-PF-ees"/>
+                    <navigationItem key="navigationItem" title="Nearby Events" id="V5m-cL-Y5j"/>
+                    <connections>
+                        <outlet property="mapView_" destination="yWL-SZ-Bod" id="zhK-B9-tFy"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qPc-Td-l3w" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1998" y="60"/>
+            <point key="canvasLocation" x="1998" y="-640"/>
         </scene>
-        <!--Item 1-->
+        <!--Username's Events-->
         <scene sceneID="AfC-fl-7Js">
             <objects>
-                <viewController id="Ujb-zR-mIP" sceneMemberID="viewController">
+                <viewController id="Ujb-zR-mIP" customClass="EventViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="AQb-iW-YJK"/>
                         <viewControllerLayoutGuide type="bottom" id="qg2-CS-gbX"/>
@@ -98,11 +113,11 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="Item 1" id="oDy-a4-tE2"/>
-                    <navigationItem key="navigationItem" id="OdU-Zl-8NG"/>
+                    <navigationItem key="navigationItem" title="Username's Events" id="zu8-GD-yBw"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cCv-jD-2sk" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1998" y="-638"/>
+            <point key="canvasLocation" x="1998" y="60"/>
         </scene>
         <!--Item-->
         <scene sceneID="N0C-hZ-jzu">
@@ -119,7 +134,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UwR-4Z-G2J" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1248" y="-638"/>
+            <point key="canvasLocation" x="1248" y="60"/>
         </scene>
         <!--Check-in-Entry-->
         <scene sceneID="a6g-BJ-8jg">
@@ -198,10 +213,10 @@
             </objects>
             <point key="canvasLocation" x="-422" y="530"/>
         </scene>
-        <!--Item 1-->
+        <!--Settings-->
         <scene sceneID="cn0-bL-XL0">
             <objects>
-                <viewController id="jjl-8m-4gx" customClass="UserViewController" sceneMemberID="viewController">
+                <viewController id="jjl-8m-4gx" customClass="SettingsViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="prg-8R-rkK"/>
                         <viewControllerLayoutGuide type="bottom" id="SBA-nd-Mft"/>
@@ -228,7 +243,7 @@
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Item 1" id="hfo-8q-4L3"/>
-                    <navigationItem key="navigationItem" id="MrA-cF-AEI"/>
+                    <navigationItem key="navigationItem" title="Settings" id="vRT-ZQ-uUi"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="VlH-Tx-dqm" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="X5C-iB-SDJ" userLabel="Exit" sceneMemberID="exit"/>

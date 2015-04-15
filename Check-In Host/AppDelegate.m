@@ -10,6 +10,7 @@
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import <ParseFacebookUtilsV4/PFFacebookUtils.h>
 #import <Parse/Parse.h>
+#import <GoogleMaps/GoogleMaps.h>
 
 @interface AppDelegate ()
 
@@ -24,6 +25,7 @@
     [Parse setApplicationId:@"blMS2b3IdmiXQ4nF5783j6bsOjQSMkrGUM4jYLRg"
                   clientKey:@"QVB7nIyAQsyLp597iiId4lYIH4HCwWQYOaYQMDAF"];
     [PFFacebookUtils initializeFacebookWithApplicationLaunchOptions:launchOptions];
+    [GMSServices provideAPIKey:@"AIzaSyC_CtC19Q_LoiBtMUBXjqDfEu_LadTmhjM"];
     return true;
 }
 
