@@ -7,18 +7,22 @@
 //
 
 #import "MapViewController.h"
+#import "PFFacebookUtils.h"
 #import <GoogleMaps/GoogleMaps.h>
 #import <CoreLocation/CoreLocation.h>
+#import "EventDetailViewController.h"
 
-@interface MapViewController ()
+@interface MapViewController () <GMSMapViewDelegate>
 @property (strong, nonatomic) IBOutlet GMSMapView *mapView;
 @property (strong, nonatomic) CLLocationManager *locationManager;
+@property (strong, nonatomic) GMSMarker *recentlyCreatedMarker;
 @end
 
 @implementation MapViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.mapView.delegate = self;
     // Do any additional setup after loading the view.
     
     /* Get current location coordinates (latitude and longitude). */
@@ -51,6 +55,27 @@
     marker.snippet = @"Place an event here?";
     marker.map = self.mapView;
 }
+
+
+- (void) mapView:(GMSMapView *)mapView didLongPressAtCoordinate:(CLLocationCoordinate2D)coordinate {
+    GMSMarker *marker = [[GMSMarker alloc] init];
+    marker.position = coordinate;
+    marker.title = @"Event Title";
+    PFUser *currentUser = [PFUser currentUser];
+    marker.snippet = currentUser[@"CHUserID"];
+    marker.map = self.mapView;
+    self.recentlyCreatedMarker = marker;
+    [self performSegueWithIdentifier:@"toEventDetail" sender:self];
+}
+
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if ([segue.identifier isEqualToString:@"toEventDetail"]) {
+        EventDetailViewController *vc = (EventDetailViewController *)[segue destinationViewController];
+        vc.marker = self.recentlyCreatedMarker;
+    }
+}
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

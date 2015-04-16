@@ -93,11 +93,45 @@
                     <navigationItem key="navigationItem" title="Nearby Events" id="V5m-cL-Y5j"/>
                     <connections>
                         <outlet property="mapView" destination="yWL-SZ-Bod" id="6tg-xZ-jxm"/>
+                        <segue destination="6MV-jX-nzR" kind="show" identifier="toEventDetail" id="Cxp-qs-SMe"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qPc-Td-l3w" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1998" y="-640"/>
+        </scene>
+        <!--Event Detail View Controller-->
+        <scene sceneID="eVN-UJ-h1F">
+            <objects>
+                <viewController id="6MV-jX-nzR" customClass="EventDetailViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="stP-ls-erf"/>
+                        <viewControllerLayoutGuide type="bottom" id="QJa-g6-Kif"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="j5s-gZ-Tca">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bCl-Ka-7LR">
+                                <rect key="frame" x="239" y="289" width="123" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="centerX" secondItem="bCl-Ka-7LR" secondAttribute="centerX" constant="-0.5" id="Yha-RS-iut"/>
+                            <constraint firstAttribute="centerY" secondItem="bCl-Ka-7LR" secondAttribute="centerY" constant="0.5" id="hjD-0R-7xq"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="eventTitle" destination="bCl-Ka-7LR" id="R2Y-S6-R6g"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="FOy-6G-ySe" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2979" y="-296"/>
         </scene>
         <!--Username's Events-->
         <scene sceneID="AfC-fl-7Js">
@@ -114,6 +148,9 @@
                     </view>
                     <tabBarItem key="tabBarItem" title="Item 1" id="oDy-a4-tE2"/>
                     <navigationItem key="navigationItem" title="Username's Events" id="zu8-GD-yBw"/>
+                    <connections>
+                        <segue destination="6MV-jX-nzR" kind="show" identifier="toEventDetail" id="wSO-iw-nMK"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cCv-jD-2sk" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -270,5 +307,6 @@
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="cJT-bu-37G"/>
+        <segue reference="wSO-iw-nMK"/>
     </inferredMetricsTieBreakers>
 </document>
