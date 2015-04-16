@@ -17,7 +17,6 @@
 
 @interface AuthViewController ()
 @property (weak, nonatomic) IBOutlet UIButton *loginButton;
-@property (strong, nonatomic) CLLocationManager *locationManager;
 @end
 
 
@@ -28,23 +27,6 @@
     [super viewDidLoad];
 
     // Do any additional setup after loading the view, typically from a nib.
-    //    PFObject *testObject = [PFObject objectWithClassName:@"TestObject"];
-    //    testObject[@"newKey2"] = @"newValue2";
-    //    [testObject saveInBackground];
-    
-//    self.locationManager = [[CLLocationManager alloc] init];
-//    [self.locationManager requestWhenInUseAuthorization];
-//
-//    CLLocation *currentLocation = [[CLLocation alloc] init];
-//    CLAuthorizationStatus authStatus = [CLLocationManager authorizationStatus];
-//    if (authStatus == kCLAuthorizationStatusAuthorizedWhenInUse
-//        || authStatus == kCLAuthorizationStatusAuthorizedAlways) {
-//        NSLog(@"successfully authorized");
-//        currentLocation = self.locationManager.location;
-//    }
-//    
-//    NSLog(@"location.latitude: %f", currentLocation.coordinate.latitude);
-//    NSLog(@"location.longitude: %f", currentLocation.coordinate.longitude);
 }
 
 

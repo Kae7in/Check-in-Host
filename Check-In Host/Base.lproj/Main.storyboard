@@ -92,7 +92,7 @@
                     <tabBarItem key="tabBarItem" title="Item 2" id="1TA-gd-ght"/>
                     <navigationItem key="navigationItem" title="Nearby Events" id="V5m-cL-Y5j"/>
                     <connections>
-                        <outlet property="mapView_" destination="yWL-SZ-Bod" id="zhK-B9-tFy"/>
+                        <outlet property="mapView" destination="yWL-SZ-Bod" id="6tg-xZ-jxm"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qPc-Td-l3w" userLabel="First Responder" sceneMemberID="firstResponder"/>
