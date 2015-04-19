@@ -36,9 +36,6 @@
         NSLog(@"successfully authorized");
         currentLocation = self.locationManager.location;
     }
-    
-    NSLog(@"location.latitude: %f", currentLocation.coordinate.latitude);
-    NSLog(@"location.longitude: %f", currentLocation.coordinate.longitude);
     CLLocationCoordinate2D currentCoordinate = {currentLocation.coordinate.latitude, currentLocation.coordinate.longitude};
     
     // Create a GMSCameraPosition that tells the map to display the
@@ -58,6 +55,7 @@
 
 
 - (void) mapView:(GMSMapView *)mapView didLongPressAtCoordinate:(CLLocationCoordinate2D)coordinate {
+#warning: create default marker and pass to EventDetailViewController
     GMSMarker *marker = [[GMSMarker alloc] init];
     marker.position = coordinate;
     marker.title = @"Event Title";

@@ -7,17 +7,22 @@
 //
 
 #import "EventDetailViewController.h"
+#import "EventRepo.h"
 
 @interface EventDetailViewController ()
 @property (weak, nonatomic) IBOutlet UILabel *eventTitle;
+@property (strong, nonatomic) EventRepo *eventRepo;
 @end
 
 @implementation EventDetailViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.eventRepo = [[EventRepo alloc] init];
     // Do any additional setup after loading the view.
     [self.eventTitle setText:self.marker.title];
+    
+    [self.eventRepo createEventWithTitle:@"My Event" location:nil date:nil attendees:nil];
 }
 
 - (void)didReceiveMemoryWarning {

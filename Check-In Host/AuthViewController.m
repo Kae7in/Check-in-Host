@@ -7,12 +7,10 @@
 //
 
 #import "AuthViewController.h"
+#import "Auth.h"
 #import <Parse/Parse.h>
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import <PFFacebookUtils.h>
-
-
-#define PERMISSIONS @[@"public_profile", @"email"]
 
 
 @interface AuthViewController ()
@@ -25,7 +23,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
     // Do any additional setup after loading the view, typically from a nib.
 }
 
@@ -69,12 +66,12 @@
         [PFUser logOut];
         [self.loginButton setTitle:@"Login" forState:UIControlStateNormal];
     } else {
-        [PFFacebookUtils logInInBackgroundWithReadPermissions:PERMISSIONS block:^(PFUser *user, NSError *error) {
+        [PFFacebookUtils logInInBackgroundWithReadPermissions:[Auth permissions] block:^(PFUser *user, NSError *error) {
                     if (!user) {
                         NSLog(@"Uh oh. The user cancelled the Facebook login.");
                     } else if (user.isNew) {
                         NSLog(@"User signed up and logged in through Facebook!");
-                        [self submitUserIDAsColumnEntryIntoUserClass];
+                        [Auth submitUserIDAsColumnEntryIntoUserClass];
                         // segue to username viewcontroller
                         [self performSegueWithIdentifier:@"segueToRegistration" sender:self];
                     } else {
@@ -84,18 +81,6 @@
                 }];
         [self.loginButton setTitle:@"Logout" forState:UIControlStateNormal];
     }
-}
-
-
-- (void)submitUserIDAsColumnEntryIntoUserClass {
-    PFUser *user = [PFUser currentUser];
-    [[[FBSDKGraphRequest alloc] initWithGraphPath:@"me" parameters:nil]
-     startWithCompletionHandler:^(FBSDKGraphRequestConnection *connection, id result, NSError *error) {
-         if (!error) {
-             user[@"fbUserID"] = [result[@"id"] description];
-             [user saveInBackground];
-         }
-     }];
 }
 
 

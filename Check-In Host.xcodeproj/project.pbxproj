@@ -21,6 +21,7 @@
 		05EE7FAA1ADE1D28000CCE5E /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 05EE7FA91ADE1D28000CCE5E /* MapViewController.m */; };
 		05EE7FAD1ADE2B6E000CCE5E /* EventViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 05EE7FAC1ADE2B6E000CCE5E /* EventViewController.m */; };
 		05EE7FB01AE03688000CCE5E /* EventDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 05EE7FAF1AE03688000CCE5E /* EventDetailViewController.m */; };
+		05EE7FB31AE0AD18000CCE5E /* EventRepo.m in Sources */ = {isa = PBXBuildFile; fileRef = 05EE7FB21AE0AD18000CCE5E /* EventRepo.m */; };
 		873AE02E41B526725E340A17 /* libPods-Check-In Host.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2AD93E8799937F1B08C5EF2D /* libPods-Check-In Host.a */; };
 /* End PBXBuildFile section */
 
@@ -61,6 +62,8 @@
 		05EE7FAC1ADE2B6E000CCE5E /* EventViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EventViewController.m; sourceTree = "<group>"; };
 		05EE7FAE1AE03688000CCE5E /* EventDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventDetailViewController.h; sourceTree = "<group>"; };
 		05EE7FAF1AE03688000CCE5E /* EventDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EventDetailViewController.m; sourceTree = "<group>"; };
+		05EE7FB11AE0AD18000CCE5E /* EventRepo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EventRepo.h; path = Model/EventRepo.h; sourceTree = "<group>"; };
+		05EE7FB21AE0AD18000CCE5E /* EventRepo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EventRepo.m; path = Model/EventRepo.m; sourceTree = "<group>"; };
 		2AD93E8799937F1B08C5EF2D /* libPods-Check-In Host.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Check-In Host.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3DC0413A47D213081D49689B /* Pods-Check-In Host.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Check-In Host.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Check-In Host/Pods-Check-In Host.debug.xcconfig"; sourceTree = "<group>"; };
 		80E350A0D22A024E25BD6761 /* Pods-Check-In Host.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Check-In Host.release.xcconfig"; path = "Pods/Target Support Files/Pods-Check-In Host/Pods-Check-In Host.release.xcconfig"; sourceTree = "<group>"; };
@@ -163,6 +166,8 @@
 			children = (
 				054E74AF1AD0EA5D0094898B /* Auth.h */,
 				054E74B01AD0EA5D0094898B /* Auth.m */,
+				05EE7FB11AE0AD18000CCE5E /* EventRepo.h */,
+				05EE7FB21AE0AD18000CCE5E /* EventRepo.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -322,6 +327,7 @@
 			files = (
 				05EE7FB01AE03688000CCE5E /* EventDetailViewController.m in Sources */,
 				05494D1E1ACDABBF00126EF9 /* AuthViewController.m in Sources */,
+				05EE7FB31AE0AD18000CCE5E /* EventRepo.m in Sources */,
 				05EE7FAD1ADE2B6E000CCE5E /* EventViewController.m in Sources */,
 				05494D1B1ACDABBF00126EF9 /* AppDelegate.m in Sources */,
 				057580731ADA3AA100EEA4FE /* RegistrationViewController.m in Sources */,
