@@ -48,7 +48,6 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     if ([FBSDKAccessToken currentAccessToken]) {
-        NSLog(@"Already Logged In");
         [self.loginButton setTitle:@"Logout" forState:UIControlStateNormal];
     } else {
         [self.loginButton setTitle:@"Login" forState:UIControlStateNormal];

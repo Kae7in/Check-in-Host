@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		052CF6281AE5BDD500FF9862 /* Event.m in Sources */ = {isa = PBXBuildFile; fileRef = 052CF6271AE5BDD500FF9862 /* Event.m */; };
 		05494D181ACDABBF00126EF9 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 05494D171ACDABBF00126EF9 /* main.m */; };
 		05494D1B1ACDABBF00126EF9 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 05494D1A1ACDABBF00126EF9 /* AppDelegate.m */; };
 		05494D1E1ACDABBF00126EF9 /* AuthViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 05494D1D1ACDABBF00126EF9 /* AuthViewController.m */; };
@@ -36,6 +37,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		052CF6261AE5BDD500FF9862 /* Event.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Event.h; path = Model/Event.h; sourceTree = "<group>"; };
+		052CF6271AE5BDD500FF9862 /* Event.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Event.m; path = Model/Event.m; sourceTree = "<group>"; };
 		05494D121ACDABBF00126EF9 /* Check-In Host.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Check-In Host.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		05494D161ACDABBF00126EF9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		05494D171ACDABBF00126EF9 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -168,6 +171,8 @@
 				054E74B01AD0EA5D0094898B /* Auth.m */,
 				05EE7FB11AE0AD18000CCE5E /* EventRepo.h */,
 				05EE7FB21AE0AD18000CCE5E /* EventRepo.m */,
+				052CF6261AE5BDD500FF9862 /* Event.h */,
+				052CF6271AE5BDD500FF9862 /* Event.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -325,6 +330,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				052CF6281AE5BDD500FF9862 /* Event.m in Sources */,
 				05EE7FB01AE03688000CCE5E /* EventDetailViewController.m in Sources */,
 				05494D1E1ACDABBF00126EF9 /* AuthViewController.m in Sources */,
 				05EE7FB31AE0AD18000CCE5E /* EventRepo.m in Sources */,

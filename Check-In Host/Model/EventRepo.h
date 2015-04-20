@@ -9,11 +9,8 @@
 #import <Foundation/Foundation.h>
 #import <CoreLocation/CoreLocation.h>
 #import "PFFacebookUtils.h"
+#import "Event.h"
 
 @interface EventRepo : NSObject
-- (void)createEventWithTitle:(NSString *)title
-                    location:(CLLocation *)location
-                        date:(NSDate *)date
-                   attendees:(PFUser *)invitees;
 - (instancetype)init;
 @end
