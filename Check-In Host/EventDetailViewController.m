@@ -10,7 +10,9 @@
 #import "Event.h"
 
 @interface EventDetailViewController ()
-@property (weak, nonatomic) IBOutlet UILabel *eventTitle;
+@property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
+@property (weak, nonatomic) IBOutlet UITextField *eventTitleTextField;
+@property (weak, nonatomic) IBOutlet UIButton *createEventButton;
 @property (strong, nonatomic) Event *event;
 @end
 
@@ -18,12 +20,37 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
-    [self.eventTitle setText:self.marker.title];
     
-    self.event = [[Event alloc] initWithEventWithTitle:@"My Event" location:nil date:nil attendees:nil];
-    [self.event commit];
+    self.automaticallyAdjustsScrollViewInsets = false;
+    self.scrollView.contentInset = UIEdgeInsetsZero;
+    self.scrollView.scrollIndicatorInsets = UIEdgeInsetsZero;
+    self.scrollView.contentOffset = CGPointMake(0.0, 0.0);
+    
+    [self.scrollView setFrame:self.view.frame];
+    [self.scrollView setContentSize:CGSizeMake(self.view.frame.size.width, 1000)];
+//    self.scrollView.contentSize = self.contentView.frame.size;
+    // Do any additional setup after loading the view.
+    
+//    self.event = [[Event alloc] initWithEventWithTitle:@"My Event" location:nil date:nil attendees:nil];
+//    [self.event commit];
 }
+
+
+- (IBAction)createEventButtonAction:(UIButton *)sender {
+    [self.marker setTitle:self.eventTitleTextField.text];
+}
+
+
+- (BOOL)shouldAutorotate
+{
+    id currentViewController = self;
+    
+    if ([currentViewController isKindOfClass:[EventDetailViewController class]])
+        return NO;
+    
+    return YES;
+}
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
