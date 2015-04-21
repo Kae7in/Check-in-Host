@@ -18,10 +18,10 @@
 		054E74B11AD0EA5D0094898B /* Auth.m in Sources */ = {isa = PBXBuildFile; fileRef = 054E74B01AD0EA5D0094898B /* Auth.m */; };
 		057580731ADA3AA100EEA4FE /* RegistrationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 057580721ADA3AA100EEA4FE /* RegistrationViewController.m */; };
 		057DEF421AD8CC9F00131325 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 057DEF411AD8CC9F00131325 /* CoreLocation.framework */; };
+		05C929DA1AE6C5CA003EFACE /* EventDetailTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 05C929D91AE6C5CA003EFACE /* EventDetailTableViewController.m */; };
 		05D7606A1ADB50BC00ACB0C6 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 05D760691ADB50BC00ACB0C6 /* SettingsViewController.m */; };
 		05EE7FAA1ADE1D28000CCE5E /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 05EE7FA91ADE1D28000CCE5E /* MapViewController.m */; };
 		05EE7FAD1ADE2B6E000CCE5E /* EventViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 05EE7FAC1ADE2B6E000CCE5E /* EventViewController.m */; };
-		05EE7FB01AE03688000CCE5E /* EventDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 05EE7FAF1AE03688000CCE5E /* EventDetailViewController.m */; };
 		05EE7FB31AE0AD18000CCE5E /* EventRepo.m in Sources */ = {isa = PBXBuildFile; fileRef = 05EE7FB21AE0AD18000CCE5E /* EventRepo.m */; };
 		873AE02E41B526725E340A17 /* libPods-Check-In Host.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2AD93E8799937F1B08C5EF2D /* libPods-Check-In Host.a */; };
 /* End PBXBuildFile section */
@@ -57,14 +57,14 @@
 		057580711ADA3AA100EEA4FE /* RegistrationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegistrationViewController.h; sourceTree = "<group>"; };
 		057580721ADA3AA100EEA4FE /* RegistrationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegistrationViewController.m; sourceTree = "<group>"; };
 		057DEF411AD8CC9F00131325 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		05C929D81AE6C5CA003EFACE /* EventDetailTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventDetailTableViewController.h; sourceTree = "<group>"; };
+		05C929D91AE6C5CA003EFACE /* EventDetailTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EventDetailTableViewController.m; sourceTree = "<group>"; };
 		05D760681ADB50BC00ACB0C6 /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
 		05D760691ADB50BC00ACB0C6 /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
 		05EE7FA81ADE1D28000CCE5E /* MapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapViewController.h; sourceTree = "<group>"; };
 		05EE7FA91ADE1D28000CCE5E /* MapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapViewController.m; sourceTree = "<group>"; };
 		05EE7FAB1ADE2B6E000CCE5E /* EventViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventViewController.h; sourceTree = "<group>"; };
 		05EE7FAC1ADE2B6E000CCE5E /* EventViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EventViewController.m; sourceTree = "<group>"; };
-		05EE7FAE1AE03688000CCE5E /* EventDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventDetailViewController.h; sourceTree = "<group>"; };
-		05EE7FAF1AE03688000CCE5E /* EventDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EventDetailViewController.m; sourceTree = "<group>"; };
 		05EE7FB11AE0AD18000CCE5E /* EventRepo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EventRepo.h; path = Model/EventRepo.h; sourceTree = "<group>"; };
 		05EE7FB21AE0AD18000CCE5E /* EventRepo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EventRepo.m; path = Model/EventRepo.m; sourceTree = "<group>"; };
 		2AD93E8799937F1B08C5EF2D /* libPods-Check-In Host.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Check-In Host.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -127,8 +127,8 @@
 				05EE7FAC1ADE2B6E000CCE5E /* EventViewController.m */,
 				05D760681ADB50BC00ACB0C6 /* SettingsViewController.h */,
 				05D760691ADB50BC00ACB0C6 /* SettingsViewController.m */,
-				05EE7FAE1AE03688000CCE5E /* EventDetailViewController.h */,
-				05EE7FAF1AE03688000CCE5E /* EventDetailViewController.m */,
+				05C929D81AE6C5CA003EFACE /* EventDetailTableViewController.h */,
+				05C929D91AE6C5CA003EFACE /* EventDetailTableViewController.m */,
 				05494D1F1ACDABBF00126EF9 /* Main.storyboard */,
 				05494D221ACDABBF00126EF9 /* Images.xcassets */,
 				05494D241ACDABBF00126EF9 /* LaunchScreen.xib */,
@@ -331,8 +331,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				052CF6281AE5BDD500FF9862 /* Event.m in Sources */,
-				05EE7FB01AE03688000CCE5E /* EventDetailViewController.m in Sources */,
 				05494D1E1ACDABBF00126EF9 /* AuthViewController.m in Sources */,
+				05C929DA1AE6C5CA003EFACE /* EventDetailTableViewController.m in Sources */,
 				05EE7FB31AE0AD18000CCE5E /* EventRepo.m in Sources */,
 				05EE7FAD1ADE2B6E000CCE5E /* EventViewController.m in Sources */,
 				05494D1B1ACDABBF00126EF9 /* AppDelegate.m in Sources */,

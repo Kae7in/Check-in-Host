@@ -12,7 +12,7 @@
 #import "PFFacebookUtils.h"
 
 @interface Event : NSObject
-- (instancetype)initWithEventWithTitle:(NSString *)title
+- (instancetype)initEventWithTitle:(NSString *)title
                               location:(CLLocation *)location
                                   date:(NSDate *)date
                              attendees:(NSMutableArray *)invitees;

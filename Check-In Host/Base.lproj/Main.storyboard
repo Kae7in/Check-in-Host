@@ -93,80 +93,40 @@
                     <navigationItem key="navigationItem" title="Nearby Events" id="V5m-cL-Y5j"/>
                     <connections>
                         <outlet property="mapView" destination="yWL-SZ-Bod" id="6tg-xZ-jxm"/>
-                        <segue destination="6MV-jX-nzR" kind="show" identifier="toEventDetail" id="Cxp-qs-SMe"/>
+                        <segue destination="zYn-zs-7JH" kind="show" identifier="toEventDetail" id="RMz-5C-Ti9"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qPc-Td-l3w" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1998" y="-640"/>
         </scene>
-        <!--Event Detail View Controller-->
-        <scene sceneID="eVN-UJ-h1F">
+        <!--Event Detail Table View Controller-->
+        <scene sceneID="MW6-BY-eHi">
             <objects>
-                <viewController id="6MV-jX-nzR" customClass="EventDetailViewController" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="stP-ls-erf"/>
-                        <viewControllerLayoutGuide type="bottom" id="QJa-g6-Kif"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="j5s-gZ-Tca">
+                <tableViewController id="zYn-zs-7JH" customClass="EventDetailTableViewController" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="fh5-Ks-Jy8">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="96P-ZX-NV6">
-                                <rect key="frame" x="0.0" y="64" width="600" height="487"/>
-                                <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Event Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bz9-JR-x2h">
-                                        <rect key="frame" x="259" y="35" width="82" height="21"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="5U1-r5-l27">
-                                        <rect key="frame" x="198" y="64" width="205" height="30"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="205" id="ZFS-Z5-3bW"/>
-                                            <constraint firstAttribute="height" constant="30" id="atO-hu-XZ0"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits"/>
-                                    </textField>
-                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eGG-e6-K8o">
-                                        <rect key="frame" x="256" y="449" width="89" height="30"/>
-                                        <state key="normal" title="Create Event">
-                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="createEventButtonAction:" destination="6MV-jX-nzR" eventType="touchUpInside" id="5dq-aC-qAE"/>
-                                        </connections>
-                                    </button>
-                                </subviews>
-                                <constraints>
-                                    <constraint firstAttribute="centerX" secondItem="5U1-r5-l27" secondAttribute="centerX" constant="-0.5" id="5ps-bt-qfb"/>
-                                    <constraint firstAttribute="centerX" secondItem="bz9-JR-x2h" secondAttribute="centerX" id="Dqz-Zb-WCJ"/>
-                                    <constraint firstAttribute="bottom" secondItem="eGG-e6-K8o" secondAttribute="bottom" constant="8" id="G0s-RW-Ltd"/>
-                                    <constraint firstItem="5U1-r5-l27" firstAttribute="top" secondItem="bz9-JR-x2h" secondAttribute="bottom" constant="8" id="YES-cJ-tI5"/>
-                                    <constraint firstItem="bz9-JR-x2h" firstAttribute="top" secondItem="96P-ZX-NV6" secondAttribute="top" constant="35" id="xqS-YC-6tl"/>
-                                    <constraint firstAttribute="centerX" secondItem="eGG-e6-K8o" secondAttribute="centerX" constant="-0.5" id="zzJ-lN-rzu"/>
-                                </constraints>
-                            </scrollView>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstItem="QJa-g6-Kif" firstAttribute="top" secondItem="96P-ZX-NV6" secondAttribute="bottom" id="5Ga-c8-RIz"/>
-                            <constraint firstItem="96P-ZX-NV6" firstAttribute="width" secondItem="j5s-gZ-Tca" secondAttribute="width" id="8oF-7g-bxE"/>
-                            <constraint firstAttribute="centerX" secondItem="96P-ZX-NV6" secondAttribute="centerX" id="JOO-KE-DmR"/>
-                            <constraint firstItem="96P-ZX-NV6" firstAttribute="top" secondItem="stP-ls-erf" secondAttribute="bottom" id="c5F-8r-WhZ"/>
-                        </constraints>
-                    </view>
-                    <connections>
-                        <outlet property="createEventButton" destination="eGG-e6-K8o" id="8RR-7g-KcU"/>
-                        <outlet property="eventTitleTextField" destination="5U1-r5-l27" id="nPv-Q3-1nh"/>
-                        <outlet property="scrollView" destination="96P-ZX-NV6" id="ckW-kJ-jzt"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="FOy-6G-ySe" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <prototypes>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" id="hw7-ww-TnA">
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="hw7-ww-TnA" id="jAF-bp-Eeb">
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="zYn-zs-7JH" id="m88-6X-EBX"/>
+                            <outlet property="delegate" destination="zYn-zs-7JH" id="rKi-pa-fYE"/>
+                        </connections>
+                    </tableView>
+                    <toolbarItems/>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="OZA-zI-N9Q" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2979" y="-296"/>
+            <point key="canvasLocation" x="2960" y="-302"/>
         </scene>
         <!--Username's Events-->
         <scene sceneID="AfC-fl-7Js">
@@ -184,7 +144,7 @@
                     <tabBarItem key="tabBarItem" title="Item 1" id="oDy-a4-tE2"/>
                     <navigationItem key="navigationItem" title="Username's Events" id="zu8-GD-yBw"/>
                     <connections>
-                        <segue destination="6MV-jX-nzR" kind="show" identifier="toEventDetail" id="wSO-iw-nMK"/>
+                        <segue destination="zYn-zs-7JH" kind="show" identifier="toEventDetail" id="uA8-uP-HLd"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cCv-jD-2sk" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -342,6 +302,6 @@
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="cJT-bu-37G"/>
-        <segue reference="wSO-iw-nMK"/>
+        <segue reference="uA8-uP-HLd"/>
     </inferredMetricsTieBreakers>
 </document>

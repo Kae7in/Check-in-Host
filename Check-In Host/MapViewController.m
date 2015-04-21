@@ -10,7 +10,7 @@
 #import "PFFacebookUtils.h"
 #import <GoogleMaps/GoogleMaps.h>
 #import <CoreLocation/CoreLocation.h>
-#import "EventDetailViewController.h"
+#import "EventDetailTableViewController.h"
 
 @interface MapViewController () <GMSMapViewDelegate>
 @property (strong, nonatomic) IBOutlet GMSMapView *mapView;
@@ -69,7 +69,7 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([segue.identifier isEqualToString:@"toEventDetail"]) {
-        EventDetailViewController *vc = (EventDetailViewController *)[segue destinationViewController];
+        EventDetailTableViewController *vc = (EventDetailTableViewController *)[segue destinationViewController];
         vc.marker = self.recentlyCreatedMarker;
     }
 }

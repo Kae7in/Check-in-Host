@@ -21,7 +21,7 @@
 
 @implementation Event
 
-- (instancetype)initWithEventWithTitle:(NSString *)title
+- (instancetype)initEventWithTitle:(NSString *)title
                               location:(CLLocation *)location
                                   date:(NSDate *)date
                              attendees:(NSMutableArray *)invitees
