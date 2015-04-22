@@ -7,18 +7,22 @@
 //
 
 #import "EventDetailTableViewController.h"
+#import <Parse/Parse.h>
 #import "Event.h"
 
-@interface EventDetailTableViewController () <UITextFieldDelegate>
+@interface EventDetailTableViewController () <UITextFieldDelegate, UITableViewDelegate>
 @property (strong, nonatomic) Event *event;
-@property (strong, nonatomic) UITextField *eventTitleField;
-@property (strong, nonatomic) UIDatePicker *eventDatePicker;
+@property (weak, nonatomic) IBOutlet UITableViewCell *eventTitleCell;
+@property (weak, nonatomic) IBOutlet UITextField *eventTitleTextField;
+@property (weak, nonatomic) IBOutlet UIDatePicker *eventDateField;
+@property (weak, nonatomic) IBOutlet UITableViewCell *eventCreateButtonCell;
 @end
 
 @implementation EventDetailTableViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self setupEventTitleField];
     
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
@@ -27,101 +31,59 @@
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
 
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
 
 
--(UITextField*) makeEventTitleField: (NSString*)text
-                  placeholder: (NSString*)placeholder  {
-    self.eventTitleField = [[UITextField alloc] init];
-    self.eventTitleField.placeholder = placeholder ;
-    self.eventTitleField.text = text;
-    self.eventTitleField.autocorrectionType = UITextAutocorrectionTypeNo ;
-    self.eventTitleField.autocapitalizationType = UITextAutocapitalizationTypeNone;
-    self.eventTitleField.adjustsFontSizeToFitWidth = YES;
-    self.eventTitleField.textColor = [UIColor colorWithRed:56.0f/255.0f green:84.0f/255.0f blue:135.0f/255.0f alpha:1.0f];
-
-    return self.eventTitleField;
+-(void)setupEventTitleField {
+    self.eventTitleTextField.autocorrectionType = UITextAutocorrectionTypeNo;
+    self.eventTitleTextField.autocapitalizationType = UITextAutocapitalizationTypeNone;
+    self.eventTitleTextField.adjustsFontSizeToFitWidth = YES;
+    self.eventTitleTextField.textColor = [UIColor colorWithRed:56.0f/255.0f green:84.0f/255.0f blue:135.0f/255.0f alpha:1.0f];
 }
 
 
-#pragma mark - Table view data source
-
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-#warning Potentially incomplete method implementation.
-    // Return the number of sections.
-    return 2;
-}
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-#warning Incomplete method implementation.
-    // Return the number of rows in the section.
-    return 1;
-}
-
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
-    
-    if (indexPath.section == 0) {
-        if (indexPath.row == 0) {
-            return [self constructEventTitleTableViewCell:cell];
-        }
-    } else if (indexPath.section == 1) {
-        if (indexPath.row == 0) {
-            return [self constructEventDateTableViewCell:cell];
-        }
-    }
-    
-    return cell;
-}
-
-
-/* Get a UITableViewCell for the Event Title UITextField entry */
-- (UITableViewCell *)constructEventTitleTableViewCell:(UITableViewCell *)cell {
-    
-    // Configure the cell...
-    cell.textLabel.text = @"Event Title" ;
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    
-    // Create UITextField
-    self.eventTitleField = [self makeEventTitleField:@"" placeholder:@"Scott Hickle's Rocket Launch"];
-    
-    // Set UITextfield frame
-    CGFloat optionalRightMargin = 10.0;
-    CGFloat optionalBottomMargin = 10.0;
-    self.eventTitleField.frame = CGRectMake(110, 10, cell.contentView.frame.size.width - 110 - optionalRightMargin, cell.contentView.frame.size.height - 10 - optionalBottomMargin);
-    self.eventTitleField.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-    
-    // Add UITextField to cell
-    [cell addSubview:self.eventTitleField];
-    
-    return cell;
-}
-
-
-- (UITableViewCell *)constructEventDateTableViewCell:(UITableViewCell *)cell {
-    
-    // Set UIDatePicker frame
-    self.eventDatePicker = [[UIDatePicker alloc] init];
-    self.eventDatePicker.frame = CGRectMake(0, 0, self.view.bounds.size.width, 100);
-//    cell.contentView.frame = self.eventDatePicker.frame;
-    cell.frame = self.eventDatePicker.frame;
-    
-    // Add UIDatePicker to cell
-    [cell addSubview:self.eventDatePicker];
-    
-    return cell;
-}
-
-
-//- (void)textFieldDidEndEditing:(UITextField *)textField {
-//    if (textField == self.eventTitleField) {
-//        self.createEventButton.enabled = true;
+/* Toggle create event button */
+//- (void)textFieldDidBeginEditing:(UITextField *)textField {
+//    if (![self.eventTitleTextField.text isEqualToString:@""] ) {
+//        // Disable create event button
+//        self.eventCreateButtonCell.userInteractionEnabled = false;
+//    } else {
+//        self.eventCreateButtonCell.userInteractionEnabled = true;
 //    }
 //}
+
+
+/* Responds to Create Event Button */
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+    
+    if (cell == self.eventCreateButtonCell) {
+        NSString *title = self.eventTitleTextField.text;
+        if ([title isEqualToString:@""]) {
+            UIAlertView *messageAlert = [[UIAlertView alloc]
+                                         initWithTitle:@"Event Title Required" message:@"Give your event a title" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+            
+            // Display Alert Message
+            [messageAlert show];
+        } else {
+            // Submit event to Parse db
+            NSDate *date = self.eventDateField.date;
+            CLLocation *location = [[CLLocation alloc] initWithLatitude:self.marker.position.latitude
+                                                              longitude:self.marker.position.longitude];
+            
+            self.event = [[Event alloc] initEventWithTitle:title location:location date:date attendees:nil];
+            [self.event commit];
+            [self.navigationController popViewControllerAnimated:true];
+        }
+        self.eventCreateButtonCell.selected = false;
+    }
+}
+
 
 /*
 // Override to support conditional editing of the table view.
