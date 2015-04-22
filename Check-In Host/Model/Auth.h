@@ -9,6 +9,9 @@
 #import <Foundation/Foundation.h>
 
 @interface Auth : NSObject
+
 + (NSArray *)permissions;
+
 + (void)submitUserIDAsColumnEntryIntoUserClass;
+
 @end

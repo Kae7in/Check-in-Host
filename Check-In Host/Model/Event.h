@@ -12,10 +12,11 @@
 #import "PFFacebookUtils.h"
 
 @interface Event : NSObject
+
 - (instancetype)initEventWithTitle:(NSString *)title
-                              location:(CLLocation *)location
-                                  date:(NSDate *)date
-                             attendees:(NSMutableArray *)invitees;
+                          location:(CLLocation *)location
+                              date:(NSDate *)date
+                         attendees:(NSMutableArray *)invitees;
 
 - (void)setTitle:(NSString *)title
         location:(CLLocation *)location
@@ -23,4 +24,5 @@
        attendees:(NSMutableArray *)invitees;
 
 - (void)commit;
+
 @end

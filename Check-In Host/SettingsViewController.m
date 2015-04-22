@@ -13,7 +13,7 @@
 
 #warning change the associated viewcontroller to have a tableview instead of buttons
 @interface SettingsViewController ()
-
+@property (weak, nonatomic) IBOutlet UILabel *userContextLabel;
 @end
 
 @implementation SettingsViewController
@@ -21,6 +21,10 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    PFUser *currentUser = [PFUser currentUser];
+    NSString *title = [@"Logged in as " stringByAppendingString:currentUser[@"CHUserID"]];
+    self.userContextLabel.text = title;
+    [[self navigationItem] setTitle:@"Profile"];
 }
 
 - (void)didReceiveMemoryWarning {

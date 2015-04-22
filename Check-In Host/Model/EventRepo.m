@@ -7,6 +7,8 @@
 //
 
 #import "EventRepo.h"
+#import "PFFacebookUtils.h"
+#import "Event.h"
 
 @interface EventRepo()
 @property NSUserDefaults *defaults;
@@ -22,6 +24,11 @@
     }
     
     return self;
+}
+
+
+- (void)saveEvent:(Event *)event {
+    // attach event to
 }
 
 @end

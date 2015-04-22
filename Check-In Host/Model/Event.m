@@ -87,16 +87,22 @@
     
     // Add a relation to the "events" column on Parse "User" class
     PFObject *currentUser = [PFUser currentUser];
-    [self.event save];
-    [currentUser save];
+
     PFRelation *eventRelation = [currentUser relationForKey:@"events"];
     [eventRelation addObject:self.event];
-    
-    [currentUser saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+
+    [self.event saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
         NSInteger errCode = [error code];
         if (kPFErrorConnectionFailed == errCode
-            ||  kPFErrorInternalServer == errCode)
+            || kPFErrorInternalServer == errCode)
             [weakSelf.event saveEventually];
+        
+        [currentUser saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+            NSInteger errCode = [error code];
+            if (kPFErrorConnectionFailed == errCode
+                || kPFErrorInternalServer == errCode)
+                [weakSelf.event saveEventually];
+        }];
     }];
 }
 

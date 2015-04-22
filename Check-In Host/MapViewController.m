@@ -15,7 +15,7 @@
 @interface MapViewController () <GMSMapViewDelegate>
 @property (strong, nonatomic) IBOutlet GMSMapView *mapView;
 @property (strong, nonatomic) CLLocationManager *locationManager;
-@property (strong, nonatomic) GMSMarker *recentlyCreatedMarker;
+@property (strong, nonatomic) GMSMarker *markerToSegueWith;
 @end
 
 @implementation MapViewController
@@ -44,25 +44,25 @@
     self.mapView.myLocationEnabled = YES;
     self.mapView.settings.myLocationButton = true;
     [self.mapView setCamera:camera];
-    
-    // Creates a marker in the center of the map.
-    GMSMarker *marker = [[GMSMarker alloc] init];
-    marker.position = CLLocationCoordinate2DMake(currentCoordinate.latitude, currentCoordinate.longitude);
-    marker.title = @"Your Location";
-    marker.snippet = @"Place an event here?";
-    marker.map = self.mapView;
 }
 
 
-- (void) mapView:(GMSMapView *)mapView didLongPressAtCoordinate:(CLLocationCoordinate2D)coordinate {
+- (void)mapView:(GMSMapView *)mapView didLongPressAtCoordinate:(CLLocationCoordinate2D)coordinate {
 #warning: create default marker and pass to EventDetailViewController
     GMSMarker *marker = [[GMSMarker alloc] init];
     marker.position = coordinate;
-    marker.title = @"Event Title";
+    marker.title = @"";
     PFUser *currentUser = [PFUser currentUser];
     marker.snippet = currentUser[@"CHUserID"];
     marker.map = self.mapView;
-    self.recentlyCreatedMarker = marker;
+    self.markerToSegueWith = marker;
+    [self performSegueWithIdentifier:@"toEventDetail" sender:self];
+}
+
+
+- (void)mapView:(GMSMapView *)mapView didTapInfoWindowOfMarker:(GMSMarker *)marker {
+#warning: Create custom Window to indicate that tapping it results in segueing to event detail view
+    self.markerToSegueWith = marker;
     [self performSegueWithIdentifier:@"toEventDetail" sender:self];
 }
 
@@ -70,7 +70,7 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([segue.identifier isEqualToString:@"toEventDetail"]) {
         EventDetailTableViewController *vc = (EventDetailTableViewController *)[segue destinationViewController];
-        vc.marker = self.recentlyCreatedMarker;
+        vc.marker = self.markerToSegueWith;
     }
 }
 

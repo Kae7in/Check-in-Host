@@ -46,23 +46,13 @@
 }
 
 
-/* Toggle create event button */
-//- (void)textFieldDidBeginEditing:(UITextField *)textField {
-//    if (![self.eventTitleTextField.text isEqualToString:@""] ) {
-//        // Disable create event button
-//        self.eventCreateButtonCell.userInteractionEnabled = false;
-//    } else {
-//        self.eventCreateButtonCell.userInteractionEnabled = true;
-//    }
-//}
-
-
 /* Responds to Create Event Button */
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
     
     if (cell == self.eventCreateButtonCell) {
+        // Display error message to user noting that event creation requires a title
         NSString *title = self.eventTitleTextField.text;
         if ([title isEqualToString:@""]) {
             UIAlertView *messageAlert = [[UIAlertView alloc]
@@ -77,6 +67,7 @@
                                                               longitude:self.marker.position.longitude];
             
             self.event = [[Event alloc] initEventWithTitle:title location:location date:date attendees:nil];
+            self.marker.title = self.eventTitleTextField.text;
             [self.event commit];
             [self.navigationController popViewControllerAnimated:true];
         }
