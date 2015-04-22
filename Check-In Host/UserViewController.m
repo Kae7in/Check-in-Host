@@ -1,22 +1,22 @@
 //
-//  SettingsViewController.m
+//  UserViewController.m
 //  Check-In Host
 //
 //  Created by Kaelin D. Hooper on 4/12/15.
 //  Copyright (c) 2015 CS378. All rights reserved.
 //
 
-#import "SettingsViewController.h"
+#import "UserViewController.h"
 #import "AuthViewController.h"
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import <PFFacebookUtils.h>
 
 #warning change the associated viewcontroller to have a tableview instead of buttons
-@interface SettingsViewController ()
+@interface UserViewController ()
 @property (weak, nonatomic) IBOutlet UILabel *userContextLabel;
 @end
 
-@implementation SettingsViewController
+@implementation UserViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];

@@ -11,11 +11,13 @@
 #import <GoogleMaps/GoogleMaps.h>
 #import <CoreLocation/CoreLocation.h>
 #import "EventDetailTableViewController.h"
+#import "Event.h"
 
 @interface MapViewController () <GMSMapViewDelegate>
 @property (strong, nonatomic) IBOutlet GMSMapView *mapView;
 @property (strong, nonatomic) CLLocationManager *locationManager;
-@property (strong, nonatomic) GMSMarker *markerToSegueWith;
+@property (strong, nonatomic) NSMutableArray *events;
+@property (strong, nonatomic) Event *eventToSegueWith;
 @end
 
 @implementation MapViewController
@@ -47,6 +49,12 @@
 }
 
 
+- (NSMutableArray *)events {
+    if (!_events) _events = [[NSMutableArray alloc] init];
+    return _events;
+}
+
+
 - (void)mapView:(GMSMapView *)mapView didLongPressAtCoordinate:(CLLocationCoordinate2D)coordinate {
 #warning: create default marker and pass to EventDetailViewController
     GMSMarker *marker = [[GMSMarker alloc] init];
@@ -55,14 +63,30 @@
     PFUser *currentUser = [PFUser currentUser];
     marker.snippet = currentUser[@"CHUserID"];
     marker.map = self.mapView;
-    self.markerToSegueWith = marker;
+    
+    Event *event = [[Event alloc] initEventWithTitle:@"" location:nil date:nil attendees:nil marker:marker];
+    [self.events addObject:event];
+    
+    self.eventToSegueWith = event;
     [self performSegueWithIdentifier:@"toEventDetail" sender:self];
 }
 
 
 - (void)mapView:(GMSMapView *)mapView didTapInfoWindowOfMarker:(GMSMarker *)marker {
 #warning: Create custom Window to indicate that tapping it results in segueing to event detail view
-    self.markerToSegueWith = marker;
+    BOOL eventNotFound = true;
+    for (Event *e in self.events) {
+        if (marker == e.marker) {
+            self.eventToSegueWith = e;
+            eventNotFound = false;
+        }
+    }
+    
+    if (eventNotFound) {
+        NSLog(@"Error: event for selected marker not found");
+        return;
+    }
+    
     [self performSegueWithIdentifier:@"toEventDetail" sender:self];
 }
 
@@ -70,7 +94,7 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([segue.identifier isEqualToString:@"toEventDetail"]) {
         EventDetailTableViewController *vc = (EventDetailTableViewController *)[segue destinationViewController];
-        vc.marker = self.markerToSegueWith;
+        vc.event = self.eventToSegueWith;
     }
 }
 

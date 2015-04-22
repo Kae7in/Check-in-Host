@@ -8,7 +8,8 @@
 
 #import <UIKit/UIKit.h>
 #import <GoogleMaps/GoogleMaps.h>
+#import "Event.h"
 
 @interface EventDetailTableViewController : UITableViewController
-@property (strong, nonatomic) GMSMarker *marker;
+@property (strong, nonatomic) Event *event;
 @end

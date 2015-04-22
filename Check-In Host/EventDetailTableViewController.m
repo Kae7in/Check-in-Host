@@ -8,27 +8,33 @@
 
 #import "EventDetailTableViewController.h"
 #import <Parse/Parse.h>
-#import "Event.h"
 
 @interface EventDetailTableViewController () <UITextFieldDelegate, UITableViewDelegate>
-@property (strong, nonatomic) Event *event;
 @property (weak, nonatomic) IBOutlet UITableViewCell *eventTitleCell;
 @property (weak, nonatomic) IBOutlet UITextField *eventTitleTextField;
 @property (weak, nonatomic) IBOutlet UIDatePicker *eventDateField;
-@property (weak, nonatomic) IBOutlet UITableViewCell *eventCreateButtonCell;
 @end
 
 @implementation EventDetailTableViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    if ([self.event.marker.title isEqualToString:@""]) {
+        self.editButtonItem.title = @"Add";
+    } else {
+        self.editButtonItem.title = @"Edit";
+        self.eventTitleTextField.enabled = false;
+        self.eventDateField.enabled = false;
+        [self setCellsWithInfoFromMarker];
+    }
+    self.editButtonItem.enabled = true;
+    self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    
     [self setupEventTitleField];
     
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
-    
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
 
 
@@ -38,41 +44,72 @@
 }
 
 
--(void)setupEventTitleField {
+- (void)setCellsWithInfoFromMarker {
+    [self.eventTitleTextField setText:self.event.marker.title];
+    NSLog(@"Date: %@", [self.event.date description]);
+    [self.eventDateField setDate:self.event.date animated:true];
+}
+
+
+-(void)setEditing:(BOOL)editing animated:(BOOL)animated {
+    
+//    [super setEditing:editing animated:animated];
+    
+    if ([self.editButtonItem.title isEqualToString:@"Add"]) {
+        // This is a new event - commit it to Parse db.
+        [self commitEvent];
+    } else {
+        // This is an existing event --> Toggle editing
+        if([self.editButtonItem.title isEqualToString:@"Done"]) {
+            // Disable editing
+            self.editButtonItem.title = @"Edit";
+            self.eventTitleTextField.enabled = false;
+            self.eventDateField.enabled = false;
+#warning: Allow for an update to the existing object after editing.
+//            [self.event update];
+        } else {
+            // Enable editing
+            self.editButtonItem.title = @"Done";
+            self.eventTitleTextField.enabled = true;
+            self.eventDateField.enabled = true;
+        }
+    }
+    
+}
+
+
+- (void)commitEvent {
+    NSString *title = self.eventTitleTextField.text;
+    if ([title isEqualToString:@""]) {
+        UIAlertView *messageAlert = [[UIAlertView alloc]
+                                initWithTitle:@"Event Title Required" message:@"Give your event a title" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+    
+        // Display Alert Message
+        [messageAlert show];
+    } else {
+        // Submit event to Parse db
+        NSDate *date = self.eventDateField.date;
+        CLLocation *location = [[CLLocation alloc] initWithLatitude:self.event.marker.position.latitude
+                                                              longitude:self.event.marker.position.longitude];
+    
+        // Update marker properties in map view
+        [self.event setTitle:title location:location date:date attendees:nil marker:self.event.marker];
+        self.event.marker.title = self.eventTitleTextField.text;
+        
+        // Commit the event Parse db
+        [self.event commit];
+        
+        // Pop back to map view
+        [self.navigationController popViewControllerAnimated:true];
+    }
+}
+
+
+- (void)setupEventTitleField {
     self.eventTitleTextField.autocorrectionType = UITextAutocorrectionTypeNo;
     self.eventTitleTextField.autocapitalizationType = UITextAutocapitalizationTypeNone;
     self.eventTitleTextField.adjustsFontSizeToFitWidth = YES;
     self.eventTitleTextField.textColor = [UIColor colorWithRed:56.0f/255.0f green:84.0f/255.0f blue:135.0f/255.0f alpha:1.0f];
-}
-
-
-/* Responds to Create Event Button */
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-    
-    if (cell == self.eventCreateButtonCell) {
-        // Display error message to user noting that event creation requires a title
-        NSString *title = self.eventTitleTextField.text;
-        if ([title isEqualToString:@""]) {
-            UIAlertView *messageAlert = [[UIAlertView alloc]
-                                         initWithTitle:@"Event Title Required" message:@"Give your event a title" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-            
-            // Display Alert Message
-            [messageAlert show];
-        } else {
-            // Submit event to Parse db
-            NSDate *date = self.eventDateField.date;
-            CLLocation *location = [[CLLocation alloc] initWithLatitude:self.marker.position.latitude
-                                                              longitude:self.marker.position.longitude];
-            
-            self.event = [[Event alloc] initEventWithTitle:title location:location date:date attendees:nil];
-            self.marker.title = self.eventTitleTextField.text;
-            [self.event commit];
-            [self.navigationController popViewControllerAnimated:true];
-        }
-        self.eventCreateButtonCell.selected = false;
-    }
 }
 
 
