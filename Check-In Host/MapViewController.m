@@ -8,24 +8,33 @@
 
 #import "MapViewController.h"
 #import "PFFacebookUtils.h"
+#import <Parse/Parse.h>
 #import <GoogleMaps/GoogleMaps.h>
 #import <CoreLocation/CoreLocation.h>
 #import "EventDetailTableViewController.h"
-#import "Event.h"
+#import "CheckinViewController.h"
 
 @interface MapViewController () <GMSMapViewDelegate>
 @property (strong, nonatomic) IBOutlet GMSMapView *mapView;
 @property (strong, nonatomic) CLLocationManager *locationManager;
-@property (strong, nonatomic) NSMutableArray *events;
+#warning: Maybe change currentUserEvents to a hashmap, later.
+@property (strong, nonatomic) NSMutableArray *currentUserEvents;
 @property (strong, nonatomic) Event *eventToSegueWith;
+@property CLLocationCoordinate2D coordinateToSegueWith;
 @end
 
 @implementation MapViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
     self.mapView.delegate = self;
     // Do any additional setup after loading the view.
+    
+    /* Load any events the current user has created */
+    [self loadCurrentUserEvents];
+    
+    self.eventToSegueWith = NULL;
     
     /* Get current location coordinates (latitude and longitude). */
     self.locationManager = [[CLLocationManager alloc] init];
@@ -49,33 +58,93 @@
 }
 
 
-- (NSMutableArray *)events {
-    if (!_events) _events = [[NSMutableArray alloc] init];
-    return _events;
+- (void)loadCurrentUserEvents {
+//    PFQuery *query = [PFUser query];
+//    [query selectKeys:@[@"events"]];
+    
+    
+//    PFRelation *relation;
+//    int count = 0;
+//    do {
+//        relation = [query getFirstObject];
+//        NSLog(@"count: %d", count);
+//        NSLog(@"QUERY: %@", [obj description]);
+//        count++;
+//    } while (obj != NULL);
+    
+    PFUser *user = [PFUser currentUser];
+    PFQuery *query = [PFUser query];
+    [query whereKey:@"objectId" equalTo:user.objectId];
+    query.limit = 1;
+    
+    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        if (!error) {
+            if (objects.count > 0) {
+                PFObject *_user = [objects objectAtIndex:0];
+//                _nameLabel.text = [_user objectForKey:@"displayName"];
+                PFRelation *_relation = _user[@"events"];
+                PFQuery *_query = [_relation query];
+                
+                [_query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+                    if (!error) {
+                        if (objects.count > 0) {
+                            NSLog(@"USER: %@", objects);
+                        }
+                    }
+                }];
+            }
+        }
+    }];
+}
+
+
+- (void)viewWillAppear:(BOOL)animated {
+    if (self.recentlyCreatedEvent && ![self.recentlyCreatedEvent.title isEqualToString:@""]) {
+        NSLog(@"Marker Created");
+        /* User created event */
+            
+        // Create marker on map for it
+        GMSMarker *marker = [[GMSMarker alloc] init];
+        marker.position = self.recentlyCreatedEvent.location.coordinate;
+        marker.title = self.recentlyCreatedEvent.title;
+        PFUser *currentUser = [PFUser currentUser];
+        marker.snippet = currentUser[@"CHUserID"];
+        marker.map = self.mapView;
+        self.recentlyCreatedEvent.marker = marker;
+            
+        [self.currentUserEvents addObject:self.recentlyCreatedEvent];
+    }
+    
+    self.recentlyCreatedEvent = NULL;
+}
+
+
+- (NSMutableArray *)currentUserEvents {
+    if (!_currentUserEvents) _currentUserEvents = [[NSMutableArray alloc] init];
+    return _currentUserEvents;
 }
 
 
 - (void)mapView:(GMSMapView *)mapView didLongPressAtCoordinate:(CLLocationCoordinate2D)coordinate {
-#warning: create default marker and pass to EventDetailViewController
-    GMSMarker *marker = [[GMSMarker alloc] init];
-    marker.position = coordinate;
-    marker.title = @"";
-    PFUser *currentUser = [PFUser currentUser];
-    marker.snippet = currentUser[@"CHUserID"];
-    marker.map = self.mapView;
-    
-    Event *event = [[Event alloc] initEventWithTitle:@"" location:nil date:nil attendees:nil marker:marker];
-    [self.events addObject:event];
+    Event *event = [[Event alloc] initEventWithTitle:@"" location:[[CLLocation alloc] initWithLatitude:coordinate.latitude longitude:coordinate.longitude] date:nil attendees:nil marker:nil];
+    event.currentUserIsOwner = true;
+
+    NSLog(@"Object in events array: %lu", self.currentUserEvents.count);
     
     self.eventToSegueWith = event;
     [self performSegueWithIdentifier:@"toEventDetail" sender:self];
 }
 
 
+- (IBAction)returnToMap:(UIStoryboardSegue *) segue {
+
+}
+
+
 - (void)mapView:(GMSMapView *)mapView didTapInfoWindowOfMarker:(GMSMarker *)marker {
 #warning: Create custom Window to indicate that tapping it results in segueing to event detail view
     BOOL eventNotFound = true;
-    for (Event *e in self.events) {
+    for (Event *e in self.currentUserEvents) {
         if (marker == e.marker) {
             self.eventToSegueWith = e;
             eventNotFound = false;
@@ -87,7 +156,15 @@
         return;
     }
     
-    [self performSegueWithIdentifier:@"toEventDetail" sender:self];
+    if (self.eventToSegueWith.currentUserIsOwner) {
+        // This is my own event; segue to event detail for editing
+        [self performSegueWithIdentifier:@"toCheckinView" sender:self];
+#warning: This following line has been temporarily replaced for testing purposes
+//        [self performSegueWithIdentifier:@"toEventDetail" sender:self];
+    } else {
+        // This is another user's event; segue to check-in view
+        [self performSegueWithIdentifier:@"toCheckinView" sender:self];
+    }
 }
 
 
@@ -95,6 +172,9 @@
     if ([segue.identifier isEqualToString:@"toEventDetail"]) {
         EventDetailTableViewController *vc = (EventDetailTableViewController *)[segue destinationViewController];
         vc.event = self.eventToSegueWith;
+    } else if ([segue.identifier isEqualToString:@"toCheckinView"]) {
+        CheckinViewController *cvc = (CheckinViewController *)[segue destinationViewController];
+        cvc.event = self.eventToSegueWith;
     }
 }
 

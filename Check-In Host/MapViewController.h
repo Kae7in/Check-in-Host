@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Event.h"
 
 @interface MapViewController : UIViewController
-
+@property (nonatomic, strong) Event *recentlyCreatedEvent;
 @end

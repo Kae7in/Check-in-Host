@@ -13,6 +13,9 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
+                    <toolbar key="toolbar" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="wnQ-p6-dQI">
+                        <autoresizingMask key="autoresizingMask"/>
+                    </toolbar>
                     <connections>
                         <segue destination="lGB-Zl-C4U" kind="relationship" relationship="rootViewController" id="tmn-aG-LRq"/>
                     </connections>
@@ -89,11 +92,12 @@
                             <constraint firstAttribute="centerX" secondItem="yWL-SZ-Bod" secondAttribute="centerX" id="xm5-HR-6Oh"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Item 2" id="1TA-gd-ght"/>
+                    <tabBarItem key="tabBarItem" title="" image="mapWithMarker" id="1TA-gd-ght"/>
                     <navigationItem key="navigationItem" title="Events" id="V5m-cL-Y5j"/>
                     <connections>
                         <outlet property="mapView" destination="yWL-SZ-Bod" id="6tg-xZ-jxm"/>
                         <segue destination="zYn-zs-7JH" kind="show" identifier="toEventDetail" id="RMz-5C-Ti9"/>
+                        <segue destination="I7e-lo-Wly" kind="show" identifier="toCheckinView" id="dtM-ec-iFK"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qPc-Td-l3w" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -164,11 +168,58 @@
                         <outlet property="eventDateField" destination="iFe-6c-lnI" id="A2J-Mf-dok"/>
                         <outlet property="eventTitleCell" destination="hw7-ww-TnA" id="0bI-jP-bYq"/>
                         <outlet property="eventTitleTextField" destination="QAB-2j-lwt" id="rta-Xr-RRb"/>
+                        <segue destination="FvR-Vp-qKl" kind="unwind" identifier="unwindToMap" unwindAction="returnToMap:" id="EZb-iV-rEu"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="OZA-zI-N9Q" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="FvR-Vp-qKl" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="2756" y="-300"/>
+            <point key="canvasLocation" x="2890" y="-682"/>
+        </scene>
+        <!--Checkin View Controller-->
+        <scene sceneID="C8z-OQ-iug">
+            <objects>
+                <viewController id="I7e-lo-Wly" customClass="CheckinViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="4Xr-ra-qUP"/>
+                        <viewControllerLayoutGuide type="bottom" id="pdK-wg-OXq"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="b9o-dw-Fc1">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dGx-1z-FQx">
+                                <rect key="frame" x="269" y="285" width="62" height="30"/>
+                                <state key="normal" title="Check-in">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="checkinButtonAction:" destination="I7e-lo-Wly" eventType="touchUpInside" id="qYv-vS-qRL"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Event Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JxH-4H-G9d">
+                                <rect key="frame" x="260" y="193" width="81" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="dGx-1z-FQx" firstAttribute="top" secondItem="JxH-4H-G9d" secondAttribute="bottom" constant="71" id="c3O-is-Glw"/>
+                            <constraint firstAttribute="centerY" secondItem="dGx-1z-FQx" secondAttribute="centerY" id="izf-nQ-SAC"/>
+                            <constraint firstAttribute="centerX" secondItem="dGx-1z-FQx" secondAttribute="centerX" id="kSd-9U-bgh"/>
+                            <constraint firstAttribute="centerX" secondItem="JxH-4H-G9d" secondAttribute="centerX" constant="-0.5" id="zyR-Xs-8sI"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="checkinButton" destination="dGx-1z-FQx" id="aIH-V6-uoc"/>
+                        <outlet property="eventTitleLabel" destination="JxH-4H-G9d" id="xsy-dP-mRp"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Vbj-0X-tv1" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2890" y="83"/>
         </scene>
         <!--Check-in-Entry-->
         <scene sceneID="a6g-BJ-8jg">
@@ -283,7 +334,9 @@
                             <constraint firstAttribute="centerY" secondItem="Inm-fp-h9F" secondAttribute="centerY" id="nB7-DM-NyQ"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Item 1" id="hfo-8q-4L3"/>
+                    <tabBarItem key="tabBarItem" title="" image="profile" id="hfo-8q-4L3">
+                        <offsetWrapper key="titlePositionAdjustment" horizontal="0.0" vertical="0.0"/>
+                    </tabBarItem>
                     <navigationItem key="navigationItem" title="Profile" id="vRT-ZQ-uUi"/>
                     <connections>
                         <outlet property="userContextLabel" destination="4o5-x3-ed4" id="wy5-IP-m2m"/>
@@ -312,6 +365,10 @@
             <point key="canvasLocation" x="1248" y="462"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="mapWithMarker" width="42" height="42"/>
+        <image name="profile" width="42" height="42"/>
+    </resources>
     <inferredMetricsTieBreakers>
         <segue reference="Jsf-cF-HYu"/>
     </inferredMetricsTieBreakers>

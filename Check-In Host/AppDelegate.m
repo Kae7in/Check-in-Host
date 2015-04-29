@@ -22,6 +22,19 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
 //    NSLog(@"application didFinishLaunchingWithOptions called with options: %@", launchOptions);
+    
+    UIColor *color = [UIColor colorWithRed:0 green:.38 blue:.88 alpha:1.0];
+    [[UINavigationBar appearance] setTranslucent:true];
+    [[UINavigationBar appearance] setBarTintColor:color];
+    [[UINavigationBar appearance] setTitleTextAttributes:@{NSForegroundColorAttributeName: [UIColor whiteColor]}];
+    [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
+    [[UITabBar appearance] setTintColor:color];
+    
+//    self.navigationController.navigationBar.translucent = true;
+//    self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:.1 green:.38 blue:.88 alpha:1.0];
+//    //    self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:.18 green:.75 blue:.18 alpha:1.0];
+//    [self.navigationController.navigationBar setTitleTextAttributes: @{NSForegroundColorAttributeName: [UIColor whiteColor]}];
+    
     [Parse setApplicationId:@"blMS2b3IdmiXQ4nF5783j6bsOjQSMkrGUM4jYLRg"
                   clientKey:@"QVB7nIyAQsyLp597iiId4lYIH4HCwWQYOaYQMDAF"];
     [PFFacebookUtils initializeFacebookWithApplicationLaunchOptions:launchOptions];

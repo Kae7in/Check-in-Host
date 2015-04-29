@@ -20,6 +20,7 @@
 @property (strong, nonatomic) NSDate *date;
 @property (strong, nonatomic) NSMutableArray *attendees;
 @property (strong, nonatomic) GMSMarker *marker;
+@property BOOL currentUserIsOwner;
 
 - (instancetype)initEventWithTitle:(NSString *)title
                           location:(CLLocation *)location

@@ -8,6 +8,7 @@
 
 #import "EventDetailTableViewController.h"
 #import <Parse/Parse.h>
+#import "MapViewController.h"
 
 @interface EventDetailTableViewController () <UITextFieldDelegate, UITableViewDelegate>
 @property (weak, nonatomic) IBOutlet UITableViewCell *eventTitleCell;
@@ -20,7 +21,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    if ([self.event.marker.title isEqualToString:@""]) {
+    [self.editButtonItem setTitleTextAttributes:@{NSForegroundColorAttributeName: [UIColor whiteColor]} forState:UIControlStateNormal];
+
+    if ([self.event.title isEqualToString:@""]) {
         self.editButtonItem.title = @"Add";
     } else {
         self.editButtonItem.title = @"Edit";
@@ -35,6 +38,13 @@
     
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
+}
+
+
+- (void)viewWillDisappear:(BOOL)animated {
+    NSInteger currentVCIndex = [self.navigationController.viewControllers indexOfObject:self.navigationController.topViewController];
+    MapViewController *parent = (MapViewController *)[self.navigationController.viewControllers objectAtIndex:currentVCIndex];
+    parent.recentlyCreatedEvent = self.event;
 }
 
 
@@ -82,15 +92,19 @@
     NSString *title = self.eventTitleTextField.text;
     if ([title isEqualToString:@""]) {
         UIAlertView *messageAlert = [[UIAlertView alloc]
-                                initWithTitle:@"Event Title Required" message:@"Give your event a title" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+                    initWithTitle:@"Event Title Required"
+                          message:@"Give your event a title"
+                         delegate:nil
+                cancelButtonTitle:@"OK"
+                otherButtonTitles:nil];
     
         // Display Alert Message
         [messageAlert show];
     } else {
         // Submit event to Parse db
         NSDate *date = self.eventDateField.date;
-        CLLocation *location = [[CLLocation alloc] initWithLatitude:self.event.marker.position.latitude
-                                                              longitude:self.event.marker.position.longitude];
+        CLLocation *location = [[CLLocation alloc] initWithLatitude:self.event.location.coordinate.latitude
+                                                              longitude:self.event.location.coordinate.longitude];
     
         // Update marker properties in map view
         [self.event setTitle:title location:location date:date attendees:nil marker:self.event.marker];
@@ -99,8 +113,16 @@
         // Commit the event Parse db
         [self.event commit];
         
-        // Pop back to map view
-        [self.navigationController popViewControllerAnimated:true];
+        // Unwind back to map view
+        [self performSegueWithIdentifier:@"unwindToMap" sender:self];
+    }
+}
+
+
+- (IBAction)prepareForUnwind:(UIStoryboardSegue *)segue {
+    if ([segue.identifier isEqualToString:@"unwindToMap"]) {
+        MapViewController *mvc = (MapViewController *)segue.sourceViewController;
+        mvc.recentlyCreatedEvent = self.event;
     }
 }
 
