@@ -30,13 +30,21 @@
 }
 
 
+- (NSMutableArray *)currentUserEvents {
+    if (!_currentUserEvents) _currentUserEvents = [[NSMutableArray alloc] init];
+    return _currentUserEvents;
+}
+
+
 - (NSUInteger)countOfCurrentUserEvents {
-    return self.currentUserEvents.count;
+    return [self.currentUserEvents count];
 }
 
 
 - (void)addCurrentUserEvent:(Event *)event {
+    NSLog(@"here");
     [self.currentUserEvents addObject:event];
+    NSLog(@"added: %lu", self.currentUserEvents.count);
 }
 
 
@@ -58,7 +66,7 @@
                 [_query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
                     if (!error) {
                         if (objects.count > 0) {
-                            self.currentUserEvents = [self NativeEventObjectsFromParseEventObjects:objects];
+//                            self.currentUserEvents = [self NativeEventObjectsFromParseEventObjects:objects];
                             NSLog(@"USER: %@", objects);
 #warning: Finish implementing
                         }
@@ -73,15 +81,15 @@
 
 - (NSMutableArray *)NativeEventObjectsFromParseEventObjects:(NSArray *)events {
 #warning: finish implementing this
+//    for (PFUser *user in events)
+    return 0;
 }
 
 
 - (Event *)eventForMarker:(GMSMarker *)marker {
-    BOOL eventNotFound = true;
     for (Event *e in self.currentUserEvents) {
         if (marker == e.marker) {
             return e;
-            eventNotFound = false;
         }
     }
     

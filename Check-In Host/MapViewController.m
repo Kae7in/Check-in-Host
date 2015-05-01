@@ -34,6 +34,7 @@
     // Do any additional setup after loading the view.
     
     /* Load any events the current user has created */
+    self.eventRepo = [[EventRepo alloc] init];
     [self.eventRepo loadCurrentUserEvents];
     
     self.eventToSegueWith = NULL;
@@ -73,7 +74,7 @@
         marker.snippet = currentUser[@"CHUserID"];
         marker.map = self.mapView;
         self.recentlyCreatedEvent.marker = marker;
-            
+
         [self.eventRepo addCurrentUserEvent:self.recentlyCreatedEvent];
     }
     
@@ -111,9 +112,7 @@
     
     if (self.eventToSegueWith.currentUserIsOwner) {
         // This is my own event; segue to event detail for editing
-        [self performSegueWithIdentifier:@"toCheckinView" sender:self];
-#warning: This following line has been temporarily replaced for testing purposes
-//        [self performSegueWithIdentifier:@"toEventDetail" sender:self];
+        [self performSegueWithIdentifier:@"toEventDetail" sender:self];
     } else {
         // This is another user's event; segue to check-in view
         [self performSegueWithIdentifier:@"toCheckinView" sender:self];
