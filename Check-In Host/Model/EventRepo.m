@@ -48,13 +48,14 @@
 }
 
 
-- (void)loadCurrentUserEvents {
+- (void)loadCurrentUserEventsWithMapView:(GMSMapView *)mapView {
     
     PFUser *user = [PFUser currentUser];
     PFQuery *query = [PFUser query];
     [query whereKey:@"objectId" equalTo:user.objectId];
     query.limit = 1;
     
+    __weak EventRepo *weakSelf = self;
     [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         if (!error) {
             if (objects.count > 0) {
@@ -66,8 +67,8 @@
                 [_query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
                     if (!error) {
                         if (objects.count > 0) {
-//                            self.currentUserEvents = [self NativeEventObjectsFromParseEventObjects:objects];
-                            NSLog(@"USER: %@", objects);
+                            weakSelf.currentUserEvents = [weakSelf NativeEventObjectsFromParseEventObjects:objects withMapView:mapView usingWeakSelf:weakSelf];
+//                            NSLog(@"USER: %@", objects);
 #warning: Finish implementing
                         }
                     }
@@ -79,10 +80,74 @@
 }
 
 
-- (NSMutableArray *)NativeEventObjectsFromParseEventObjects:(NSArray *)events {
-#warning: finish implementing this
-//    for (PFUser *user in events)
-    return 0;
+- (NSMutableArray *)NativeEventObjectsFromParseEventObjects:(NSArray *)parseEvents withMapView:(GMSMapView *)mapView usingWeakSelf:(EventRepo *)weakSelf {
+    NSMutableArray *nativeEvents = [[NSMutableArray alloc] init];
+    for (PFObject *event in parseEvents) {
+        
+        /* Get host username from user relation on parse event */
+        PFRelation *userRelation = event[@"hostUser"];
+        PFQuery *_query = [userRelation query];
+        __block NSString *username;
+        [_query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+            if (!error) {
+                if (objects.count > 0) {
+                    PFUser *hostUser = [objects firstObject];
+                    if (hostUser) {
+                        username = hostUser[@"CHUserID"];
+                    }
+                    
+                    /* Get the rest of the info from the Parse event object */
+                    Event *nativeEvent = [weakSelf NativeEventObjectFromParseEventObject:event withMapView:mapView];
+                    if (nativeEvent) {
+                        nativeEvent.marker.snippet = username;
+                        [nativeEvents addObject:nativeEvent];
+                    }
+                }
+            }
+        }];
+    }
+    
+    return nativeEvents;
+}
+
+
+- (Event *)NativeEventObjectFromParseEventObject:(PFObject *)parseEvent withMapView:(GMSMapView *)mapView {
+    NSString *title = parseEvent[@"title"];
+    PFGeoPoint *geoPoint = parseEvent[@"location"];
+    CLLocation *location = [[CLLocation alloc] initWithLatitude:geoPoint.latitude longitude:geoPoint.longitude];
+    NSDate *date = parseEvent[@"date"];
+#warning: implement grabbing attendees
+    
+    GMSMarker *marker = [[GMSMarker alloc] init];
+    [marker setTitle:title];
+    [marker setPosition:location.coordinate];
+//    [marker setSnippet:hostUser];
+    marker.map = mapView;
+    
+    Event *nativeEvent = [[Event alloc] initEventWithTitle:title location:location date:date attendees:nil marker:marker];
+    
+    return nativeEvent;
+}
+
+
+/* Get host username from user relation on parse event */
+- (NSString *)getHostUsername:(PFRelation *)userRelation {
+    
+    __block NSString *username;
+    PFQuery *_query = [userRelation query];
+    
+    [_query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        if (!error) {
+            if (objects.count > 0) {
+                PFUser *hostUser = [objects firstObject];
+                if (hostUser) {
+                    username = hostUser[@"CHUserID"];
+                }
+            }
+        }
+    }];
+    
+    return username;
 }
 
 

@@ -56,7 +56,6 @@
 
 - (void)setCellsWithInfoFromMarker {
     [self.eventTitleTextField setText:self.event.marker.title];
-    NSLog(@"Date: %@", [self.event.date description]);
     [self.eventDateField setDate:self.event.date animated:true];
 }
 

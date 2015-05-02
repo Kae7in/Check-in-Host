@@ -35,7 +35,7 @@
     
     /* Load any events the current user has created */
     self.eventRepo = [[EventRepo alloc] init];
-    [self.eventRepo loadCurrentUserEvents];
+    [self.eventRepo loadCurrentUserEventsWithMapView:self.mapView];
     
     self.eventToSegueWith = NULL;
     

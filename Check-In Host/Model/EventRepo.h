@@ -15,7 +15,7 @@
 @property (nonatomic) NSUInteger countOfCurrentUserEvents;
 
 - (instancetype)init;
-- (void)loadCurrentUserEvents;
+- (void)loadCurrentUserEventsWithMapView:(GMSMapView *)mapView;
 - (void)addCurrentUserEvent:(Event *)event;
 - (Event *)eventForMarker:(GMSMarker *)marker;
 @end
