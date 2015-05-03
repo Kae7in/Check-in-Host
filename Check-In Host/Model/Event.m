@@ -30,8 +30,7 @@
         self.PFEvent = [PFObject objectWithClassName:@"Event"];
         
         // Locally set the host user (current user) of this event
-        PFRelation *userRelation = [self.PFEvent relationForKey:@"hostUser"];
-        [userRelation addObject:[PFUser currentUser]];
+        [self.PFEvent setObject:[PFUser currentUser] forKey:@"hostUser"];
         
         // Set the internal properties of the event
         [self setTitle:title location:location date:date attendees:attendees marker:marker];
@@ -95,10 +94,10 @@
     
     // Add a relation to the "events" column on Parse "User" class
     PFObject *currentUser = [PFUser currentUser];
-
+    
     PFRelation *eventRelation = [currentUser relationForKey:@"events"];
     [eventRelation addObject:self.PFEvent];
-
+    
     [self.PFEvent saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
         NSInteger errCode = [error code];
         if (kPFErrorConnectionFailed == errCode
