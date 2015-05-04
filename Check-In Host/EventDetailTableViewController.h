@@ -10,7 +10,8 @@
 #import <GoogleMaps/GoogleMaps.h>
 #import <CoreLocation/CoreLocation.h>
 #import "Event.h"
+#import "XLFormViewController.h"
 
-@interface EventDetailTableViewController : UITableViewController
+@interface EventDetailTableViewController : XLFormViewController
 @property (strong, nonatomic) Event *event;
 @end

@@ -17,7 +17,8 @@
 @property (strong, nonatomic) NSString *objectID;
 @property (strong, nonatomic) NSString *title;
 @property (strong, nonatomic) CLLocation *location;
-@property (strong, nonatomic) NSDate *date;
+@property (strong, nonatomic) NSDate *startDate;
+@property (strong, nonatomic) NSDate *endDate;
 @property (strong, nonatomic) NSMutableArray *attendees;
 @property (strong, nonatomic) NSMutableArray *invitees;
 @property (strong, nonatomic) GMSMarker *marker;
@@ -25,14 +26,16 @@
 
 - (instancetype)initEventWithTitle:(NSString *)title
                           location:(CLLocation *)location
-                              date:(NSDate *)date
+                         startDate:(NSDate *)startDate
+                           endDate:(NSDate *)endDate
                          attendees:(NSMutableArray *)attendees
                           invitees:(NSMutableArray *)invitees
                             marker:(GMSMarker *)marker;
 
 - (void)setTitle:(NSString *)title
         location:(CLLocation *)location
-            date:(NSDate *)date
+       startDate:(NSDate *)startDate
+         endDate:(NSDate *)endDate
        attendees:(NSMutableArray *)attendees
         invitees:(NSMutableArray *)invitees
           marker:(GMSMarker *)marker;

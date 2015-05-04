@@ -63,7 +63,7 @@
     if (self.createdEvent) {
         NSLog(@"Marker Created");
         /* User created event */
-            
+        
         // Create marker on map for it
         GMSMarker *marker = [[GMSMarker alloc] init];
         marker.position = self.createdEvent.location.coordinate;
@@ -91,7 +91,7 @@
 
 
 - (void)mapView:(GMSMapView *)mapView didLongPressAtCoordinate:(CLLocationCoordinate2D)coordinate {
-    Event *event = [[Event alloc] initEventWithTitle:@"" location:[[CLLocation alloc] initWithLatitude:coordinate.latitude longitude:coordinate.longitude] date:nil attendees:nil invitees:nil marker:nil];
+    Event *event = [[Event alloc] initEventWithTitle:@"" location:[[CLLocation alloc] initWithLatitude:coordinate.latitude longitude:coordinate.longitude] startDate:nil endDate:nil attendees:nil invitees:nil marker:nil];
 
     NSLog(@"Object in events array: %lu", self.eventRepo.countOfCurrentUserEvents);
     

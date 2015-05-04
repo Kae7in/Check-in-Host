@@ -114,7 +114,8 @@
     NSString *hostUsername = hostUser[@"CHUserID"];
     PFGeoPoint *geoPoint = parseEvent[@"location"];
     CLLocation *location = [[CLLocation alloc] initWithLatitude:geoPoint.latitude longitude:geoPoint.longitude];
-    NSDate *date = parseEvent[@"date"];
+    NSDate *startDate = parseEvent[@"startDate"];
+    NSDate *endDate = parseEvent[@"endDate"];
 #warning: implement grabbing attendees
     
     GMSMarker *marker = [[GMSMarker alloc] init];
@@ -127,7 +128,7 @@
     }
     marker.map = mapView;
     
-    Event *nativeEvent = [[Event alloc] initEventWithTitle:title location:location date:date attendees:nil invitees:nil marker:marker];
+    Event *nativeEvent = [[Event alloc] initEventWithTitle:title location:location startDate:startDate endDate:endDate attendees:nil invitees:nil marker:marker];
     if ([hostUsername isEqualToString:[[PFUser currentUser] objectForKey:@"CHUserID"]]) {
         nativeEvent.currentUserIsHost = true;
     }

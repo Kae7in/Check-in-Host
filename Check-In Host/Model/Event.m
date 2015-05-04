@@ -19,9 +19,10 @@
 
 - (instancetype)initEventWithTitle:(NSString *)title
                               location:(CLLocation *)location
-                                  date:(NSDate *)date
+                             startDate:(NSDate *)startDate
+                               endDate:(NSDate *)endDate
                              attendees:(NSMutableArray *)attendees
-                            invitees:(NSMutableArray *)invitees
+                              invitees:(NSMutableArray *)invitees
                                 marker:(GMSMarker *)marker
 {
     self = [super init];
@@ -34,7 +35,7 @@
         [self.PFEvent setObject:[PFUser currentUser] forKey:@"hostUser"];
         
         // Set the internal properties of the event
-        [self setTitle:title location:location date:date attendees:attendees invitees:invitees marker:marker];
+        [self setTitle:title location:location startDate:startDate endDate:endDate attendees:attendees invitees:invitees marker:marker];
     }
     
     return self;
@@ -43,9 +44,10 @@
 
 - (void)setTitle:(NSString *)title
         location:(CLLocation *)location
-            date:(NSDate *)date
+       startDate:(NSDate *)startDate
+         endDate:(NSDate *)endDate
        attendees:(NSMutableArray *)attendees
-       invitees:(NSMutableArray *)invitees
+        invitees:(NSMutableArray *)invitees
           marker:(GMSMarker *)marker
 {
     /******* CREATE EVENT OBJECT *******/
@@ -64,9 +66,14 @@
     }
     
     // set the date
-    if (date) {
-        [self.PFEvent setObject:date forKey:@"date"];
-        self.date = date;
+    if (startDate) {
+        [self.PFEvent setObject:startDate forKey:@"startDate"];
+        self.startDate = startDate;
+    }
+    
+    if (endDate) {
+        [self.PFEvent setObject:endDate forKey:@"endDate"];
+        self.endDate = endDate;
     }
     
     // set list of invitees(s)
@@ -98,7 +105,7 @@
             ||  kPFErrorInternalServer == errCode)
             [weakSelf.PFEvent saveEventually];
     }];
-    
+
     // Add a relation to the "events" column on Parse "User" class
     PFObject *currentUser = [PFUser currentUser];
     

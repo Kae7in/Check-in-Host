@@ -111,52 +111,8 @@
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="fh5-Ks-Jy8">
                         <rect key="frame" x="0.0" y="64" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
-                        <sections>
-                            <tableViewSection id="9bq-z1-HCk">
-                                <cells>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="eventTitleCell" id="hw7-ww-TnA">
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="hw7-ww-TnA" id="jAF-bp-Eeb">
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Event Title" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="QAB-2j-lwt">
-                                                    <rect key="frame" x="8" y="7" width="592" height="30"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                    <textInputTraits key="textInputTraits" spellCheckingType="yes"/>
-                                                </textField>
-                                            </subviews>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
-                                </cells>
-                            </tableViewSection>
-                            <tableViewSection id="Opk-Gc-Hjg">
-                                <cells>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="eventTitleCell" rowHeight="193" id="kbC-ZC-M1X">
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="kbC-ZC-M1X" id="QsK-ni-1B3">
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="iFe-6c-lnI">
-                                                    <rect key="frame" x="0.0" y="15" width="600" height="162"/>
-                                                    <date key="date" timeIntervalSinceReferenceDate="451350965.53485298">
-                                                        <!--2015-04-21 23:16:05 +0000-->
-                                                    </date>
-                                                </datePicker>
-                                            </subviews>
-                                            <constraints>
-                                                <constraint firstItem="iFe-6c-lnI" firstAttribute="centerY" secondItem="QsK-ni-1B3" secondAttribute="centerY" id="8Gg-2P-JcQ"/>
-                                                <constraint firstItem="iFe-6c-lnI" firstAttribute="leading" secondItem="QsK-ni-1B3" secondAttribute="leading" id="CwU-nU-b5O"/>
-                                                <constraint firstAttribute="trailing" secondItem="iFe-6c-lnI" secondAttribute="trailing" id="gKf-MV-HHi"/>
-                                            </constraints>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
-                                </cells>
-                            </tableViewSection>
-                            <tableViewSection id="LI4-Ir-qrm">
-                                <cells/>
-                            </tableViewSection>
-                        </sections>
+                        <color key="backgroundColor" red="0.93725490196078431" green="0.93725490196078431" blue="0.95686274509803926" alpha="1" colorSpace="calibratedRGB"/>
+                        <sections/>
                         <connections>
                             <outlet property="dataSource" destination="zYn-zs-7JH" id="m88-6X-EBX"/>
                             <outlet property="delegate" destination="zYn-zs-7JH" id="rKi-pa-fYE"/>
@@ -165,11 +121,7 @@
                     <toolbarItems/>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
-                        <outlet property="eventDateField" destination="iFe-6c-lnI" id="A2J-Mf-dok"/>
-                        <outlet property="eventTitleCell" destination="hw7-ww-TnA" id="0bI-jP-bYq"/>
-                        <outlet property="eventTitleTextField" destination="QAB-2j-lwt" id="rta-Xr-RRb"/>
-                        <segue destination="FvR-Vp-qKl" kind="unwind" identifier="unwindToMapFromCreate" unwindAction="returnToMap:" id="EZb-iV-rEu"/>
-                        <segue destination="FvR-Vp-qKl" kind="unwind" identifier="unwindToMapFromEdit" unwindAction="returnToMap:" id="nwl-jL-09u"/>
+                        <segue destination="FvR-Vp-qKl" kind="unwind" identifier="unwindToMapFromCreate" unwindAction="returnToMap:" id="01e-r9-9J7"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="OZA-zI-N9Q" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -201,7 +153,7 @@
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Event Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JxH-4H-G9d">
                                 <rect key="frame" x="260" y="193" width="81" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
@@ -323,7 +275,7 @@
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Logged in as username" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4o5-x3-ed4">
                                 <rect key="frame" x="210" y="256" width="180" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>

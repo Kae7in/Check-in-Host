@@ -9,11 +9,18 @@
 #import "EventDetailTableViewController.h"
 #import <Parse/Parse.h>
 #import "MapViewController.h"
+#import "XLFormDescriptor.h"
+#import "XLFormSectionDescriptor.h"
+#import "XLFormRowDescriptor.h"
+//#import "DateAndTimeValueTrasform.h"
+//#import "NativeEventFormViewController.h"
+#import "XLForm.h"
 
 @interface EventDetailTableViewController () <UITextFieldDelegate, UITableViewDelegate>
-@property (weak, nonatomic) IBOutlet UITableViewCell *eventTitleCell;
-@property (weak, nonatomic) IBOutlet UITextField *eventTitleTextField;
-@property (weak, nonatomic) IBOutlet UIDatePicker *eventDateField;
+@property (nonatomic) XLFormRowDescriptor *eventTitleRowDescriptor;
+//@property (nonatomic) XLFormRowDescriptor *eventAllDayRowDescriptor;
+@property (nonatomic) XLFormRowDescriptor *eventStartDateRowDescriptor;
+@property (nonatomic) XLFormRowDescriptor *eventEndDateRowDescriptor;
 @property (nonatomic) BOOL edited;
 @end
 
@@ -21,24 +28,67 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    [self initializeForm];
     [self.editButtonItem setTitleTextAttributes:@{NSForegroundColorAttributeName: [UIColor whiteColor]} forState:UIControlStateNormal];
 
     if ([self.event.title isEqualToString:@""]) {
         self.editButtonItem.title = @"Add";
     } else {
         self.editButtonItem.title = @"Edit";
-        self.eventTitleTextField.enabled = false;
-        self.eventDateField.enabled = false;
         [self setCellsWithInfoFromMarker];
     }
+    
     self.editButtonItem.enabled = true;
     self.navigationItem.rightBarButtonItem = self.editButtonItem;
+}
+
+
+- (void)initializeForm {
+    XLFormDescriptor * form;
+    XLFormSectionDescriptor * section;
+    XLFormRowDescriptor * row;
     
-    [self setupEventTitleField];
+    form = [XLFormDescriptor formDescriptorWithTitle:@"Add Event"];
     
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
+    /* New Section */
+    section = [XLFormSectionDescriptor formSection];
+    [form addFormSection:section];
+    
+    // Title
+    row = [XLFormRowDescriptor formRowDescriptorWithTag:@"Title" rowType:XLFormRowDescriptorTypeText];
+    [row.cellConfigAtConfigure setObject:@"Title" forKey:@"textField.placeholder"];
+    row.required = YES;
+    self.eventTitleRowDescriptor = row;
+    [section addFormRow:row];
+    
+    // Location
+//    row = [XLFormRowDescriptor formRowDescriptorWithTag:@"location" rowType:XLFormRowDescriptorTypeText];
+//    [row.cellConfigAtConfigure setObject:@"Location" forKey:@"textField.placeholder"];
+    
+//    [section addFormRow:row];
+    
+    /* New Section */
+    section = [XLFormSectionDescriptor formSection];
+    [form addFormSection:section];
+    
+    // All-day
+//    row = [XLFormRowDescriptor formRowDescriptorWithTag:@"all-day" rowType:XLFormRowDescriptorTypeBooleanSwitch title:@"All-day"];
+//    self.eventAllDayRowDescriptor = row;
+//    [section addFormRow:row];
+    
+    // Starts
+    row = [XLFormRowDescriptor formRowDescriptorWithTag:@"starts" rowType:XLFormRowDescriptorTypeDateTimeInline title:@"Starts"];
+    row.value = [NSDate dateWithTimeIntervalSinceNow:60*60*24];
+    self.eventStartDateRowDescriptor = row;
+    [section addFormRow:row];
+    
+    // Ends
+    row = [XLFormRowDescriptor formRowDescriptorWithTag:@"ends" rowType:XLFormRowDescriptorTypeDateTimeInline title:@"Ends"];
+    row.value = [NSDate dateWithTimeIntervalSinceNow:60*60*25];
+    self.eventEndDateRowDescriptor = row;
+    [section addFormRow:row];
+    
+    self.form = form;
 }
 
 
@@ -49,8 +99,9 @@
 
 
 - (void)setCellsWithInfoFromMarker {
-    [self.eventTitleTextField setText:self.event.marker.title];
-    [self.eventDateField setDate:self.event.date animated:true];
+    self.eventTitleRowDescriptor.value = self.event.marker.title;
+//    [self.eventDateField setDate:self.event.date animated:true];
+//    [self reloadFormRow:self.eventTitleRowDescriptor];
 }
 
 
@@ -66,16 +117,12 @@
         if([self.editButtonItem.title isEqualToString:@"Done"]) {
             // Disable editing
             self.editButtonItem.title = @"Edit";
-            self.eventTitleTextField.enabled = false;
-            self.eventDateField.enabled = false;
 #warning: Allow for an update to the existing object after editing.
 //            [self.event update];
         } else {
             // Enable editing
             self.editButtonItem.title = @"Done";
             self.edited = true;
-            self.eventTitleTextField.enabled = true;
-            self.eventDateField.enabled = true;
         }
     }
     
@@ -83,7 +130,7 @@
 
 
 - (void)commitEvent {
-    NSString *title = self.eventTitleTextField.text;
+    NSString *title = self.eventTitleRowDescriptor.value;
     if ([title isEqualToString:@""]) {
         UIAlertView *messageAlert = [[UIAlertView alloc]
                     initWithTitle:@"Event Title Required"
@@ -96,13 +143,14 @@
         [messageAlert show];
     } else {
         // Submit event to Parse db
-        NSDate *date = self.eventDateField.date;
+        NSDate *startDate = self.eventStartDateRowDescriptor.value;
+        NSDate *endDate = self.eventEndDateRowDescriptor.value;
         CLLocation *location = [[CLLocation alloc] initWithLatitude:self.event.location.coordinate.latitude
                                                               longitude:self.event.location.coordinate.longitude];
     
         // Update marker properties in map view
-        [self.event setTitle:title location:location date:date attendees:nil invitees:nil marker:self.event.marker];
-        self.event.marker.title = self.eventTitleTextField.text;
+        [self.event setTitle:title location:location startDate:startDate endDate:endDate attendees:nil invitees:nil marker:self.event.marker];
+        self.event.marker.title = self.eventTitleRowDescriptor.value;
         
         // Commit the event Parse db
         self.event.currentUserIsHost = true;
@@ -114,9 +162,11 @@
 }
 
 
-- (IBAction)prepareForUnwind:(UIStoryboardSegue *)segue {
-    MapViewController *mvc = (MapViewController *)segue.sourceViewController;
+- (IBAction)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    NSLog(@"ahh");
+    MapViewController *mvc = (MapViewController *)segue.destinationViewController;
     if ([segue.identifier isEqualToString:@"unwindToMapFromCreate"]) {
+        NSLog(@"unwindToMapFromCreate");
         mvc.createdEvent = self.event;
     } else if ([segue.identifier isEqualToString:@"unwindToMapFromEdit"]) {
         if (self.edited) {
@@ -126,15 +176,6 @@
         }
     }
 }
-
-
-- (void)setupEventTitleField {
-    self.eventTitleTextField.autocorrectionType = UITextAutocorrectionTypeNo;
-    self.eventTitleTextField.autocapitalizationType = UITextAutocapitalizationTypeNone;
-    self.eventTitleTextField.adjustsFontSizeToFitWidth = YES;
-    self.eventTitleTextField.textColor = [UIColor colorWithRed:56.0f/255.0f green:84.0f/255.0f blue:135.0f/255.0f alpha:1.0f];
-}
-
 
 /*
 // Override to support conditional editing of the table view.
