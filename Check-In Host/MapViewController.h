@@ -10,5 +10,6 @@
 #import "Event.h"
 
 @interface MapViewController : UIViewController
-@property (nonatomic, strong) Event *recentlyCreatedEvent;
+@property (nonatomic, strong) Event *createdEvent;
+@property (nonatomic, strong) Event *editedEvent;
 @end

@@ -21,7 +21,8 @@
                               location:(CLLocation *)location
                                   date:(NSDate *)date
                              attendees:(NSMutableArray *)attendees
-                            marker:(GMSMarker *)marker
+                            invitees:(NSMutableArray *)invitees
+                                marker:(GMSMarker *)marker
 {
     self = [super init];
     
@@ -33,7 +34,7 @@
         [self.PFEvent setObject:[PFUser currentUser] forKey:@"hostUser"];
         
         // Set the internal properties of the event
-        [self setTitle:title location:location date:date attendees:attendees marker:marker];
+        [self setTitle:title location:location date:date attendees:attendees invitees:invitees marker:marker];
     }
     
     return self;
@@ -44,6 +45,7 @@
         location:(CLLocation *)location
             date:(NSDate *)date
        attendees:(NSMutableArray *)attendees
+       invitees:(NSMutableArray *)invitees
           marker:(GMSMarker *)marker
 {
     /******* CREATE EVENT OBJECT *******/
@@ -69,8 +71,13 @@
     
     // set list of invitees(s)
     if (attendees) {
-        [self.PFEvent setObject:attendees forKey:@"invitees"];
+        [self.PFEvent setObject:attendees forKey:@"attendees"];
         self.attendees = attendees;
+    }
+    
+    if (invitees) {
+        [self.PFEvent setObject:invitees forKey:@"invitees"];
+        self.invitees = invitees;
     }
     
     if (marker) {

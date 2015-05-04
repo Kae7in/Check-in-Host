@@ -19,19 +19,22 @@
 @property (strong, nonatomic) CLLocation *location;
 @property (strong, nonatomic) NSDate *date;
 @property (strong, nonatomic) NSMutableArray *attendees;
+@property (strong, nonatomic) NSMutableArray *invitees;
 @property (strong, nonatomic) GMSMarker *marker;
-@property BOOL currentUserIsOwner;
+@property (nonatomic) BOOL currentUserIsHost;
 
 - (instancetype)initEventWithTitle:(NSString *)title
                           location:(CLLocation *)location
                               date:(NSDate *)date
                          attendees:(NSMutableArray *)attendees
+                          invitees:(NSMutableArray *)invitees
                             marker:(GMSMarker *)marker;
 
 - (void)setTitle:(NSString *)title
         location:(CLLocation *)location
             date:(NSDate *)date
        attendees:(NSMutableArray *)attendees
+        invitees:(NSMutableArray *)invitees
           marker:(GMSMarker *)marker;
 
 - (void)commit;

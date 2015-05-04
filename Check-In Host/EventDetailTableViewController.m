@@ -14,6 +14,7 @@
 @property (weak, nonatomic) IBOutlet UITableViewCell *eventTitleCell;
 @property (weak, nonatomic) IBOutlet UITextField *eventTitleTextField;
 @property (weak, nonatomic) IBOutlet UIDatePicker *eventDateField;
+@property (nonatomic) BOOL edited;
 @end
 
 @implementation EventDetailTableViewController
@@ -38,13 +39,6 @@
     
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
-}
-
-
-- (void)viewWillDisappear:(BOOL)animated {
-    NSInteger currentVCIndex = [self.navigationController.viewControllers indexOfObject:self.navigationController.topViewController];
-    MapViewController *parent = (MapViewController *)[self.navigationController.viewControllers objectAtIndex:currentVCIndex];
-    parent.recentlyCreatedEvent = self.event;
 }
 
 
@@ -79,6 +73,7 @@
         } else {
             // Enable editing
             self.editButtonItem.title = @"Done";
+            self.edited = true;
             self.eventTitleTextField.enabled = true;
             self.eventDateField.enabled = true;
         }
@@ -106,22 +101,29 @@
                                                               longitude:self.event.location.coordinate.longitude];
     
         // Update marker properties in map view
-        [self.event setTitle:title location:location date:date attendees:nil marker:self.event.marker];
+        [self.event setTitle:title location:location date:date attendees:nil invitees:nil marker:self.event.marker];
         self.event.marker.title = self.eventTitleTextField.text;
         
         // Commit the event Parse db
+        self.event.currentUserIsHost = true;
         [self.event commit];
         
         // Unwind back to map view
-        [self performSegueWithIdentifier:@"unwindToMap" sender:self];
+        [self performSegueWithIdentifier:@"unwindToMapFromCreate" sender:self];
     }
 }
 
 
 - (IBAction)prepareForUnwind:(UIStoryboardSegue *)segue {
-    if ([segue.identifier isEqualToString:@"unwindToMap"]) {
-        MapViewController *mvc = (MapViewController *)segue.sourceViewController;
-        mvc.recentlyCreatedEvent = self.event;
+    MapViewController *mvc = (MapViewController *)segue.sourceViewController;
+    if ([segue.identifier isEqualToString:@"unwindToMapFromCreate"]) {
+        mvc.createdEvent = self.event;
+    } else if ([segue.identifier isEqualToString:@"unwindToMapFromEdit"]) {
+        if (self.edited) {
+            mvc.editedEvent = self.event;
+        } else {
+            mvc.editedEvent = NULL;
+        }
     }
 }
 

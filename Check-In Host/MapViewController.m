@@ -18,8 +18,6 @@
 @interface MapViewController () <GMSMapViewDelegate>
 @property (strong, nonatomic) IBOutlet GMSMapView *mapView;
 @property (strong, nonatomic) CLLocationManager *locationManager;
-#warning: Maybe change currentUserEvents to a hashmap, later.
-//@property (strong, nonatomic) NSMutableArray *currentUserEvents;
 @property (strong, nonatomic) EventRepo *eventRepo;
 @property (strong, nonatomic) Event *eventToSegueWith;
 @property CLLocationCoordinate2D coordinateToSegueWith;
@@ -62,23 +60,27 @@
 
 
 - (void)viewWillAppear:(BOOL)animated {
-    if (self.recentlyCreatedEvent && ![self.recentlyCreatedEvent.title isEqualToString:@""]) {
+    if (self.createdEvent) {
         NSLog(@"Marker Created");
         /* User created event */
             
         // Create marker on map for it
         GMSMarker *marker = [[GMSMarker alloc] init];
-        marker.position = self.recentlyCreatedEvent.location.coordinate;
-        marker.title = self.recentlyCreatedEvent.title;
+        marker.position = self.createdEvent.location.coordinate;
+        marker.title = self.createdEvent.title;
         PFUser *currentUser = [PFUser currentUser];
         marker.snippet = currentUser[@"CHUserID"];
         marker.map = self.mapView;
-        self.recentlyCreatedEvent.marker = marker;
+        self.createdEvent.marker = marker;
 
-        [self.eventRepo addCurrentUserEvent:self.recentlyCreatedEvent];
+        [self.eventRepo addCurrentUserEvent:self.createdEvent];
+    } else if (self.editedEvent) {
+#warning: Udpate marker to reflect edits
+#warning: Replace event in set of events
     }
     
-    self.recentlyCreatedEvent = NULL;
+    self.editedEvent = NULL;
+    self.createdEvent = NULL;
 }
 
 
@@ -89,8 +91,7 @@
 
 
 - (void)mapView:(GMSMapView *)mapView didLongPressAtCoordinate:(CLLocationCoordinate2D)coordinate {
-    Event *event = [[Event alloc] initEventWithTitle:@"" location:[[CLLocation alloc] initWithLatitude:coordinate.latitude longitude:coordinate.longitude] date:nil attendees:nil marker:nil];
-    event.currentUserIsOwner = true;
+    Event *event = [[Event alloc] initEventWithTitle:@"" location:[[CLLocation alloc] initWithLatitude:coordinate.latitude longitude:coordinate.longitude] date:nil attendees:nil invitees:nil marker:nil];
 
     NSLog(@"Object in events array: %lu", self.eventRepo.countOfCurrentUserEvents);
     
@@ -110,7 +111,7 @@
     Event *e = [self.eventRepo eventForMarker:marker];
     self.eventToSegueWith = e;
     
-    if (self.eventToSegueWith.currentUserIsOwner) {
+    if (self.eventToSegueWith.currentUserIsHost) {
         // This is my own event; segue to event detail for editing
         [self performSegueWithIdentifier:@"toEventDetail" sender:self];
     } else {

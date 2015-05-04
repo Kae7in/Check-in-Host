@@ -168,7 +168,8 @@
                         <outlet property="eventDateField" destination="iFe-6c-lnI" id="A2J-Mf-dok"/>
                         <outlet property="eventTitleCell" destination="hw7-ww-TnA" id="0bI-jP-bYq"/>
                         <outlet property="eventTitleTextField" destination="QAB-2j-lwt" id="rta-Xr-RRb"/>
-                        <segue destination="FvR-Vp-qKl" kind="unwind" identifier="unwindToMap" unwindAction="returnToMap:" id="EZb-iV-rEu"/>
+                        <segue destination="FvR-Vp-qKl" kind="unwind" identifier="unwindToMapFromCreate" unwindAction="returnToMap:" id="EZb-iV-rEu"/>
+                        <segue destination="FvR-Vp-qKl" kind="unwind" identifier="unwindToMapFromEdit" unwindAction="returnToMap:" id="nwl-jL-09u"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="OZA-zI-N9Q" userLabel="First Responder" sceneMemberID="firstResponder"/>

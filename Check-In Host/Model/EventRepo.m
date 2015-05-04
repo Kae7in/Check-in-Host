@@ -15,6 +15,7 @@
 @interface EventRepo()
 @property NSUserDefaults *defaults;
 @property (strong, nonatomic) NSMutableArray *currentUserEvents;
+@property (strong, nonatomic) NSMutableArray *eventsInvitedTo;
 @end
 
 @implementation EventRepo
@@ -23,7 +24,7 @@
     self = [super init];
     
     if (self) {
-        self.defaults = [NSUserDefaults standardUserDefaults];
+//        self.defaults = [NSUserDefaults standardUserDefaults];
     }
     
     return self;
@@ -36,15 +37,30 @@
 }
 
 
+- (NSMutableArray *)eventsInvitedTo {
+    if (!_eventsInvitedTo) _eventsInvitedTo = [[NSMutableArray alloc] init];
+    return _eventsInvitedTo;
+}
+
+
 - (NSUInteger)countOfCurrentUserEvents {
     return [self.currentUserEvents count];
 }
 
 
+- (NSUInteger)countOfEventsInvitedTo {
+    return [self.eventsInvitedTo count];
+}
+
+
 - (void)addCurrentUserEvent:(Event *)event {
-    NSLog(@"here");
     [self.currentUserEvents addObject:event];
-    NSLog(@"added: %lu", self.currentUserEvents.count);
+    NSLog(@"EVENTS ADDED: %lu", self.currentUserEvents.count);
+}
+
+
+- (void)addEventInvitedTo:(Event *)event {
+    [self.eventsInvitedTo addObject:event];
 }
 
 
@@ -85,7 +101,6 @@
         if (nativeEvent) {
             [nativeEvents addObject:nativeEvent];
         }
-        
     }
     
     return nativeEvents;
@@ -108,11 +123,15 @@
     if (hostUsername) {
         [marker setSnippet:hostUsername];
     } else {
-        [marker setSnippet:@"Uknown"];
+        [marker setSnippet:@"Unknown"];
     }
     marker.map = mapView;
     
-    Event *nativeEvent = [[Event alloc] initEventWithTitle:title location:location date:date attendees:nil marker:marker];
+    Event *nativeEvent = [[Event alloc] initEventWithTitle:title location:location date:date attendees:nil invitees:nil marker:marker];
+    if ([hostUsername isEqualToString:[[PFUser currentUser] objectForKey:@"CHUserID"]]) {
+        nativeEvent.currentUserIsHost = true;
+    }
+    
     
     return nativeEvent;
 }
