@@ -21,7 +21,6 @@
 @property (strong, nonatomic) NSDate *endDate;
 @property (strong, nonatomic) NSMutableArray *attendees;
 @property (strong, nonatomic) NSMutableArray *invitees;
-@property (strong, nonatomic) GMSMarker *marker;
 @property (nonatomic) BOOL currentUserIsHost;
 
 - (instancetype)initEventWithTitle:(NSString *)title
@@ -29,16 +28,14 @@
                          startDate:(NSDate *)startDate
                            endDate:(NSDate *)endDate
                          attendees:(NSMutableArray *)attendees
-                          invitees:(NSMutableArray *)invitees
-                            marker:(GMSMarker *)marker;
+                          invitees:(NSMutableArray *)invitees;
 
 - (void)setTitle:(NSString *)title
         location:(CLLocation *)location
        startDate:(NSDate *)startDate
          endDate:(NSDate *)endDate
        attendees:(NSMutableArray *)attendees
-        invitees:(NSMutableArray *)invitees
-          marker:(GMSMarker *)marker;
+        invitees:(NSMutableArray *)invitees;
 
 - (void)commit;
 

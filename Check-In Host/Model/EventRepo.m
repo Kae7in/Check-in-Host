@@ -14,7 +14,6 @@
 
 @interface EventRepo()
 @property NSUserDefaults *defaults;
-@property (strong, nonatomic) NSMutableArray *currentUserEvents;
 @property (strong, nonatomic) NSMutableArray *eventsInvitedTo;
 @end
 
@@ -43,16 +42,6 @@
 }
 
 
-- (NSUInteger)countOfCurrentUserEvents {
-    return [self.currentUserEvents count];
-}
-
-
-- (NSUInteger)countOfEventsInvitedTo {
-    return [self.eventsInvitedTo count];
-}
-
-
 - (void)addCurrentUserEvent:(Event *)event {
     [self.currentUserEvents addObject:event];
     NSLog(@"EVENTS ADDED: %lu", self.currentUserEvents.count);
@@ -64,13 +53,13 @@
 }
 
 
-- (void)loadCurrentUserEventsWithMapView:(GMSMapView *)mapView {
+- (void)loadCurrentUserEventsWithCompletionHandler:(void(^)(void))completionHandler {
     PFUser *user = [PFUser currentUser];
     PFQuery *query = [PFUser query];
     [query whereKey:@"objectId" equalTo:user.objectId];
     query.limit = 1;
-    
     __weak EventRepo *weakSelf = self;
+
     [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         if (!error) {
             if (objects.count > 0) {
@@ -82,7 +71,8 @@
                 [_query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
                     if (!error) {
                         if (objects.count > 0) {
-                            weakSelf.currentUserEvents = [weakSelf NativeEventObjectsFromParseEventObjects:objects withMapView:mapView usingWeakSelf:weakSelf];
+                            weakSelf.currentUserEvents = [weakSelf NativeEventObjectsFromParseEventObjects:objects usingWeakSelf:weakSelf];
+                            completionHandler();
                         }
                     }
                 }];
@@ -93,11 +83,11 @@
 }
 
 
-- (NSMutableArray *)NativeEventObjectsFromParseEventObjects:(NSArray *)parseEvents withMapView:(GMSMapView *)mapView usingWeakSelf:(EventRepo *)weakSelf {
+- (NSMutableArray *)NativeEventObjectsFromParseEventObjects:(NSArray *)parseEvents usingWeakSelf:(EventRepo *)weakSelf {
     NSMutableArray *nativeEvents = [[NSMutableArray alloc] init];
     for (PFObject *event in parseEvents) {
         /* Get the rest of the info from the Parse event object */
-        Event *nativeEvent = [weakSelf NativeEventObjectFromParseEventObject:event withMapView:mapView];
+        Event *nativeEvent = [weakSelf NativeEventObjectFromParseEventObject:event];
         if (nativeEvent) {
             [nativeEvents addObject:nativeEvent];
         }
@@ -107,7 +97,7 @@
 }
 
 
-- (Event *)NativeEventObjectFromParseEventObject:(PFObject *)parseEvent withMapView:(GMSMapView *)mapView {
+- (Event *)NativeEventObjectFromParseEventObject:(PFObject *)parseEvent {
     NSString *title = parseEvent[@"title"];
     PFUser *hostUser = [[PFUser alloc] init];
     hostUser = [parseEvent objectForKey:@"hostUser"];
@@ -118,21 +108,20 @@
     NSDate *endDate = parseEvent[@"endDate"];
 #warning: implement grabbing attendees
     
-    GMSMarker *marker = [[GMSMarker alloc] init];
-    [marker setTitle:title];
-    [marker setPosition:location.coordinate];
-    if (hostUsername) {
-        [marker setSnippet:hostUsername];
-    } else {
-        [marker setSnippet:@"Unknown"];
-    }
-    marker.map = mapView;
+//    GMSMarker *marker = [[GMSMarker alloc] init];
+//    [marker setTitle:title];
+//    [marker setPosition:location.coordinate];
+//    if (hostUsername) {
+//        [marker setSnippet:hostUsername];
+//    } else {
+//        [marker setSnippet:@"Unknown"];
+//    }
+//    marker.map = mapView;
     
-    Event *nativeEvent = [[Event alloc] initEventWithTitle:title location:location startDate:startDate endDate:endDate attendees:nil invitees:nil marker:marker];
+    Event *nativeEvent = [[Event alloc] initEventWithTitle:title location:location startDate:startDate endDate:endDate attendees:nil invitees:nil];
     if ([hostUsername isEqualToString:[[PFUser currentUser] objectForKey:@"CHUserID"]]) {
         nativeEvent.currentUserIsHost = true;
     }
-    
     
     return nativeEvent;
 }
@@ -160,11 +149,11 @@
 
 
 - (Event *)eventForMarker:(GMSMarker *)marker {
-    for (Event *e in self.currentUserEvents) {
-        if (marker == e.marker) {
-            return e;
-        }
-    }
+//    for (Event *e in self.currentUserEvents) {
+//        if (marker == e.marker) {
+//            return e;
+//        }
+//    }
     
     NSLog(@"Error: event for selected marker not found");
 

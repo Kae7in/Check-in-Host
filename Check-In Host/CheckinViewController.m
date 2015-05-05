@@ -7,11 +7,11 @@
 //
 
 #import "CheckinViewController.h"
+#import "Event.h"
 
 @interface CheckinViewController ()
 @property (weak, nonatomic) IBOutlet UILabel *eventTitleLabel;
 @property (weak, nonatomic) IBOutlet UIButton *checkinButton;
-
 @end
 
 @implementation CheckinViewController

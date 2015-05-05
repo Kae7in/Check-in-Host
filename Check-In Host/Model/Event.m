@@ -9,6 +9,7 @@
 #import "Event.h"
 #import "PFGeoPoint.h"
 #import "PFRelation.h"
+#import <Parse/Parse.h>
 
 @interface Event()
 #warning Maybe save some event as private properties (in NSUserDefaults) for ease of recalling on load?
@@ -23,7 +24,6 @@
                                endDate:(NSDate *)endDate
                              attendees:(NSMutableArray *)attendees
                               invitees:(NSMutableArray *)invitees
-                                marker:(GMSMarker *)marker
 {
     self = [super init];
     
@@ -35,7 +35,7 @@
         [self.PFEvent setObject:[PFUser currentUser] forKey:@"hostUser"];
         
         // Set the internal properties of the event
-        [self setTitle:title location:location startDate:startDate endDate:endDate attendees:attendees invitees:invitees marker:marker];
+        [self setTitle:title location:location startDate:startDate endDate:endDate attendees:attendees invitees:invitees];
     }
     
     return self;
@@ -48,7 +48,6 @@
          endDate:(NSDate *)endDate
        attendees:(NSMutableArray *)attendees
         invitees:(NSMutableArray *)invitees
-          marker:(GMSMarker *)marker
 {
     /******* CREATE EVENT OBJECT *******/
     
@@ -78,17 +77,13 @@
     
     // set list of invitees(s)
     if (attendees) {
-        [self.PFEvent setObject:attendees forKey:@"attendees"];
+//        [self.PFEvent setObject:attendees forKey:@"attendees"];
         self.attendees = attendees;
     }
     
     if (invitees) {
-        [self.PFEvent setObject:invitees forKey:@"invitees"];
+//        [self.PFEvent setObject:invitees forKey:@"invitees"];
         self.invitees = invitees;
-    }
-    
-    if (marker) {
-        self.marker = marker;
     }
     
     self.objectID = self.PFEvent.objectId;
@@ -97,35 +92,71 @@
 
 /* Commit this event object to the Parse database */
 - (void)commit {
-    // Save event to Parse "Event" class
-    __weak Event *weakSelf = self;
-    [self.PFEvent saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-        NSInteger errCode = [error code];
-        if (kPFErrorConnectionFailed == errCode
-            ||  kPFErrorInternalServer == errCode)
-            [weakSelf.PFEvent saveEventually];
-    }];
-
-    // Add a relation to the "events" column on Parse "User" class
-    PFObject *currentUser = [PFUser currentUser];
     
-    PFRelation *eventRelation = [currentUser relationForKey:@"events"];
-    [eventRelation addObject:self.PFEvent];
-    
-    [self.PFEvent saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-        NSInteger errCode = [error code];
-        if (kPFErrorConnectionFailed == errCode
-            || kPFErrorInternalServer == errCode)
-            [weakSelf.PFEvent saveEventually];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        // Save the event
+        [self.PFEvent save];
         
-        [currentUser saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-            NSInteger errCode = [error code];
-            if (kPFErrorConnectionFailed == errCode
-                || kPFErrorInternalServer == errCode)
-                [weakSelf.PFEvent saveEventually];
+        // Add a relation to the "events" column on Parse "User" class
+        PFRelation *eventRelation = [[PFUser currentUser] relationForKey:@"events"];
+        [eventRelation addObject:self.PFEvent];
+        
+        // Add relations to the "invitees" column on Parse "Event" class
+        if (self.invitees) {
+            [self addInviteesRelations];
+        }
+        
+        [self.PFEvent saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+            [[PFUser currentUser] saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                    
+            }];
         }];
-    }];
+    });
+    
 }
+
+
+- (void)addInviteesRelations {
+    
+    for (NSString *username in self.invitees) {
+        // Get a PFUser with username
+        PFQuery *query = [PFUser query];
+        [query whereKey:@"CHUserID" equalTo:username];
+        NSArray *objects = [query findObjects];
+        PFUser *invitee = [objects firstObject];
+
+        if (invitee) {
+            NSLog(@"User: %@", invitee[@"CHUserID"]);
+                
+            // Add the PFUser to the "invitees" relation on this event
+            PFRelation *userRelation = [self.PFEvent relationForKey:@"invitees"];
+            [userRelation addObject:invitee];
+                
+            // Add the PFEvent to the "events" relation on the invited user
+            PFRelation *eventRelation = [invitee relationForKey:@"events"];
+            [eventRelation addObject:self.PFEvent];
+            
+//            [self saveInviteeUsingCloudCode:invitee];
+        }
+        
+    }
+
+}
+
+
+//- (void)saveInviteeUsingCloudCode:(PFUser *)invitee {
+//    PFUser *user = [PFUser currentUser];
+//    [PFCloud callFunctionInBackground:@"CalUsed" //This is the Parse function
+//                       withParameters:@{@"user": user.objectId}
+//                                block:^(NSNumber *CalUsed1, NSError *error) { // This is where the block starts
+//                                    if (!error) { //if the block retrieves the data with no problem, this will run
+//                                        NSLog(@"Calories : %@",CalUsed1);
+//                                        CalUsed = CalUsed1;
+//                                    }
+//                                    CalUsed = CalUsed1;
+//                                    NSLog(@"TDEE IN FN is : %@",CalUsed);
+//                                }];
+//}
 
 
 #warning: Allow for an update to the existing object after editing.

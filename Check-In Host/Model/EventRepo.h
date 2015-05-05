@@ -12,10 +12,10 @@
 #import "Event.h"
 
 @interface EventRepo : NSObject
-@property (nonatomic) NSUInteger countOfCurrentUserEvents;
+@property (strong, nonatomic) NSMutableArray *currentUserEvents;
 
 - (instancetype)init;
-- (void)loadCurrentUserEventsWithMapView:(GMSMapView *)mapView;
+- (void)loadCurrentUserEventsWithCompletionHandler:(void(^)(void))completionHandler;
 - (void)addCurrentUserEvent:(Event *)event;
 - (Event *)eventForMarker:(GMSMarker *)marker;
 @end

@@ -17,10 +17,10 @@
 #import "XLForm.h"
 
 @interface EventDetailTableViewController () <UITextFieldDelegate, UITableViewDelegate>
-@property (nonatomic) XLFormRowDescriptor *eventTitleRowDescriptor;
-//@property (nonatomic) XLFormRowDescriptor *eventAllDayRowDescriptor;
-@property (nonatomic) XLFormRowDescriptor *eventStartDateRowDescriptor;
-@property (nonatomic) XLFormRowDescriptor *eventEndDateRowDescriptor;
+@property (strong, nonatomic) XLFormDescriptor *eventFormDescriptor;
+@property (strong, nonatomic) XLFormRowDescriptor *eventTitleRowDescriptor;
+@property (strong, nonatomic) XLFormRowDescriptor *eventStartDateRowDescriptor;
+@property (strong, nonatomic) XLFormRowDescriptor *eventEndDateRowDescriptor;
 @property (nonatomic) BOOL edited;
 @end
 
@@ -35,7 +35,7 @@
         self.editButtonItem.title = @"Add";
     } else {
         self.editButtonItem.title = @"Edit";
-        [self setCellsWithInfoFromMarker];
+        [self setCellsWithInfoFromEvent];
     }
     
     self.editButtonItem.enabled = true;
@@ -49,9 +49,10 @@
     XLFormRowDescriptor * row;
     
     form = [XLFormDescriptor formDescriptorWithTitle:@"Add Event"];
+    self.eventFormDescriptor = form;
     
     /* New Section */
-    section = [XLFormSectionDescriptor formSection];
+    section = [XLFormSectionDescriptor formSectionWithTitle:@"Event Title"];
     [form addFormSection:section];
     
     // Title
@@ -68,7 +69,7 @@
 //    [section addFormRow:row];
     
     /* New Section */
-    section = [XLFormSectionDescriptor formSection];
+    section = [XLFormSectionDescriptor formSectionWithTitle:@"Event Time"];
     [form addFormSection:section];
     
     // All-day
@@ -88,6 +89,21 @@
     self.eventEndDateRowDescriptor = row;
     [section addFormRow:row];
     
+    
+    
+    // Enable Insertion, Deletion, Reordering
+    section = [XLFormSectionDescriptor formSectionWithTitle:@"Invited"
+                                             sectionOptions:XLFormSectionOptionCanInsert | XLFormSectionOptionCanDelete];
+    section.multivaluedTag = @"invitees";
+    [form addFormSection:section];
+    
+    // add an empty row to the section.
+    row = [XLFormRowDescriptor formRowDescriptorWithTag:nil rowType:XLFormRowDescriptorTypeText title:nil];
+    [[row cellConfig] setObject:@"Username" forKey:@"textField.placeholder"];
+    [section addFormRow:row];
+    
+    
+    
     self.form = form;
 }
 
@@ -98,8 +114,10 @@
 }
 
 
-- (void)setCellsWithInfoFromMarker {
-    self.eventTitleRowDescriptor.value = self.event.marker.title;
+- (void)setCellsWithInfoFromEvent {
+    self.eventTitleRowDescriptor.value = self.event.title;
+    self.eventStartDateRowDescriptor.value = self.event.startDate;
+    self.eventEndDateRowDescriptor.value = self.event.endDate;
 //    [self.eventDateField setDate:self.event.date animated:true];
 //    [self reloadFormRow:self.eventTitleRowDescriptor];
 }
@@ -130,7 +148,7 @@
 
 
 - (void)commitEvent {
-    NSString *title = self.eventTitleRowDescriptor.value;
+    NSString *title = self.eventFormDescriptor.formValues[@"Title"];
     if ([title isEqualToString:@""]) {
         UIAlertView *messageAlert = [[UIAlertView alloc]
                     initWithTitle:@"Event Title Required"
@@ -143,14 +161,15 @@
         [messageAlert show];
     } else {
         // Submit event to Parse db
-        NSDate *startDate = self.eventStartDateRowDescriptor.value;
-        NSDate *endDate = self.eventEndDateRowDescriptor.value;
+        NSDate *startDate = self.eventFormDescriptor.formValues[@"starts"];
+        NSDate *endDate = self.eventFormDescriptor.formValues[@"ends"];
         CLLocation *location = [[CLLocation alloc] initWithLatitude:self.event.location.coordinate.latitude
                                                               longitude:self.event.location.coordinate.longitude];
-    
+        NSMutableArray *invitees = self.eventFormDescriptor.formValues[@"invitees"];
+        
         // Update marker properties in map view
-        [self.event setTitle:title location:location startDate:startDate endDate:endDate attendees:nil invitees:nil marker:self.event.marker];
-        self.event.marker.title = self.eventTitleRowDescriptor.value;
+        [self.event setTitle:title location:location startDate:startDate endDate:endDate attendees:nil invitees:invitees];
+//        self.marker.title = self.eventTitleRowDescriptor.value;
         
         // Commit the event Parse db
         self.event.currentUserIsHost = true;
