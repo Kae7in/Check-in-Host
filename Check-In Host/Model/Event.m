@@ -98,7 +98,7 @@
         [self.PFEvent save];
         
         // Add a relation to the "events" column on Parse "User" class
-        PFRelation *eventRelation = [[PFUser currentUser] relationForKey:@"events"];
+        PFRelation *eventRelation = [[PFUser currentUser] relationForKey:@"hostedEvents"];
         [eventRelation addObject:self.PFEvent];
         
         // Add relations to the "invitees" column on Parse "Event" class
@@ -133,7 +133,7 @@
             [userRelation addObject:invitee];
                 
             // Add the PFEvent to the "events" relation on the invited user
-            PFRelation *eventRelation = [invitee relationForKey:@"events"];
+            PFRelation *eventRelation = [invitee relationForKey:@"eventsInvitedTo"];
             [eventRelation addObject:self.PFEvent];
             
 //            [self saveInviteeUsingCloudCode:invitee];
