@@ -4,7 +4,7 @@
 target 'Check-In Host' do
 
 pod 'Google-Maps-iOS-SDK', '~> 1.9'
-pod 'Facebook-iOS-SDK', '~> 4.0'
+#pod 'Facebook-iOS-SDK', '~> 4.0'
 pod 'Parse', '~> 1.7'
 # previously: pod 'FBSDKCoreKit', '~> 4.0'
 pod 'ParseFacebookUtilsV4', '~> 1.7'

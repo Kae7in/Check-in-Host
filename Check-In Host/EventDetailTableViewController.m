@@ -12,8 +12,6 @@
 #import "XLFormDescriptor.h"
 #import "XLFormSectionDescriptor.h"
 #import "XLFormRowDescriptor.h"
-//#import "DateAndTimeValueTrasform.h"
-//#import "NativeEventFormViewController.h"
 #import "XLForm.h"
 
 @interface EventDetailTableViewController () <UITextFieldDelegate, UITableViewDelegate>
@@ -44,15 +42,15 @@
 
 
 - (void)initializeForm {
-    XLFormDescriptor * form;
-    XLFormSectionDescriptor * section;
-    XLFormRowDescriptor * row;
+    XLFormDescriptor *form;
+    XLFormSectionDescriptor *section;
+    XLFormRowDescriptor *row;
     
     form = [XLFormDescriptor formDescriptorWithTitle:@"Add Event"];
     self.eventFormDescriptor = form;
     
     /* New Section */
-    section = [XLFormSectionDescriptor formSectionWithTitle:@"Event Title"];
+    section = [XLFormSectionDescriptor formSectionWithTitle:@""];
     [form addFormSection:section];
     
     // Title
@@ -69,7 +67,7 @@
 //    [section addFormRow:row];
     
     /* New Section */
-    section = [XLFormSectionDescriptor formSectionWithTitle:@"Event Time"];
+    section = [XLFormSectionDescriptor formSectionWithTitle:@""];
     [form addFormSection:section];
     
     // All-day
@@ -92,7 +90,7 @@
     
     
     // Enable Insertion, Deletion, Reordering
-    section = [XLFormSectionDescriptor formSectionWithTitle:@"Invited"
+    section = [XLFormSectionDescriptor formSectionWithTitle:@""
                                              sectionOptions:XLFormSectionOptionCanInsert | XLFormSectionOptionCanDelete];
     section.multivaluedTag = @"invitees";
     [form addFormSection:section];
@@ -101,8 +99,6 @@
     row = [XLFormRowDescriptor formRowDescriptorWithTag:nil rowType:XLFormRowDescriptorTypeText title:nil];
     [[row cellConfig] setObject:@"Username" forKey:@"textField.placeholder"];
     [section addFormRow:row];
-    
-    
     
     self.form = form;
 }
@@ -145,7 +141,6 @@
     }
     
 }
-
 
 - (void)commitEvent {
     NSString *title = self.eventFormDescriptor.formValues[@"Title"];
@@ -195,6 +190,7 @@
         }
     }
 }
+
 
 /*
 // Override to support conditional editing of the table view.

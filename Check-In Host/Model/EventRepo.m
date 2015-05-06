@@ -44,7 +44,6 @@
 
 - (void)addCurrentUserEvent:(Event *)event {
     [self.currentUserEvents addObject:event];
-    NSLog(@"EVENTS ADDED: %lu", self.currentUserEvents.count);
 }
 
 
@@ -64,7 +63,7 @@
         if (!error) {
             if (objects.count > 0) {
                 PFObject *_user = [objects objectAtIndex:0];
-                PFRelation *_relation = _user[@"events"];
+                PFRelation *_relation = _user[@"hostedEvents"];
                 PFQuery *_query = [_relation query];
                 [_query includeKey:@"hostUser"];
                 

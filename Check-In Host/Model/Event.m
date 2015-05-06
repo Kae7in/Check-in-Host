@@ -93,7 +93,7 @@
 /* Commit this event object to the Parse database */
 - (void)commit {
     
-    dispatch_async(dispatch_get_main_queue(), ^{
+    dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
         // Save the event
         [self.PFEvent save];
         
@@ -111,6 +111,7 @@
                     
             }];
         }];
+        
     });
     
 }
@@ -131,32 +132,27 @@
             // Add the PFUser to the "invitees" relation on this event
             PFRelation *userRelation = [self.PFEvent relationForKey:@"invitees"];
             [userRelation addObject:invitee];
-                
-            // Add the PFEvent to the "events" relation on the invited user
-            PFRelation *eventRelation = [invitee relationForKey:@"eventsInvitedTo"];
-            [eventRelation addObject:self.PFEvent];
             
-//            [self saveInviteeUsingCloudCode:invitee];
+            /* Update userMetadata object to hold the Event the invitee was invited to */
+            // Start by getting the invitee's userMetadata object
+            PFObject *inviteeMetadata = [invitee objectForKey:@"userMetadata"];
+            
+            // Then create a relation for an Event on it
+            PFRelation *inviteeMetadataRelation = [inviteeMetadata relationForKey:@"eventsInvitedTo"];
+            [inviteeMetadataRelation addObject:self.PFEvent];
+            
+            // Save it
+            [inviteeMetadata save];
+            
+            // Add the PFEvent to the "events" relation on the invited user
+//            PFRelation *eventRelation = [invitee relationForKey:@"eventsInvitedTo"];
+//            [eventRelation addObject:self.PFEvent];
+//            
+//            [invitee save];
         }
-        
     }
 
 }
-
-
-//- (void)saveInviteeUsingCloudCode:(PFUser *)invitee {
-//    PFUser *user = [PFUser currentUser];
-//    [PFCloud callFunctionInBackground:@"CalUsed" //This is the Parse function
-//                       withParameters:@{@"user": user.objectId}
-//                                block:^(NSNumber *CalUsed1, NSError *error) { // This is where the block starts
-//                                    if (!error) { //if the block retrieves the data with no problem, this will run
-//                                        NSLog(@"Calories : %@",CalUsed1);
-//                                        CalUsed = CalUsed1;
-//                                    }
-//                                    CalUsed = CalUsed1;
-//                                    NSLog(@"TDEE IN FN is : %@",CalUsed);
-//                                }];
-//}
 
 
 #warning: Allow for an update to the existing object after editing.

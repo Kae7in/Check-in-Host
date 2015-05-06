@@ -32,11 +32,22 @@
 
 
 - (IBAction)submitButtonAction:(UIButton *)sender {
-    PFUser *user = [PFUser currentUser];
-    NSLog(@"User entered CHUserID: %@", self.usernameTextField.text);
+    
+    dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
+        // Create user with given username
+        PFUser *user = [PFUser currentUser];
 #warning check if username is already in DB
-    user[@"CHUserID"] = self.usernameTextField.text;
-    [user saveInBackground];
+        user[@"CHUserID"] = self.usernameTextField.text;
+        [user save];
+        
+        // Create userMetadata entry for this user
+        PFObject *userMetadata = [PFObject objectWithClassName:@"userMetadata"];
+        [userMetadata save];
+        
+        [user setObject:userMetadata forKey:@"userMetadata"];
+        [user save];
+    });
+    
     [self performSegueWithIdentifier:@"segueToTabBar" sender:self];
 }
 
